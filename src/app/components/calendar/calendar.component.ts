@@ -75,11 +75,26 @@ export class CalendarComponent {
 
   private getTimeslots() {
     for (let av of this.availability) {
+      av.startDate.setHours(0, 0, 0, 0);
+      if (av.endDate) av.endDate.setHours(23, 59, 59, 99);
       for (let day of this.days) {
         if (av.daysOfWeek && !av.daysOfWeek.includes(day.dayOfWeek)) continue;
+        if (day.dayOfWeek == 'Thursday') {
+          console.log(day.date);
+          console.log(av.startDate);
+          console.log(
+            !av.oneTime &&
+              day.date >= av.startDate &&
+              av.endDate &&
+              day.date <= av.endDate
+          );
+        }
         if (
           (day.date == av.startDate && av.oneTime) ||
-          (!av.oneTime && day.date >= av.startDate)
+          (!av.oneTime &&
+            day.date >= av.startDate &&
+            av.endDate &&
+            day.date <= av.endDate)
         ) {
           for (let times of av.times) {
             let [startHours, startMinutes] = times.start.split(':').map(Number);
@@ -112,7 +127,6 @@ export class CalendarComponent {
         if (times.end > latestTime) latestTime = times.end;
       }
     }
-    console.log(earliestTime, latestTime);
     const [earliestHours, earliestMinutes] = earliestTime
       .split(':')
       .map(Number);
