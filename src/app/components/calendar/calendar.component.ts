@@ -79,16 +79,6 @@ export class CalendarComponent {
       if (av.endDate) av.endDate.setHours(23, 59, 59, 99);
       for (let day of this.days) {
         if (av.daysOfWeek && !av.daysOfWeek.includes(day.dayOfWeek)) continue;
-        if (day.dayOfWeek == 'Thursday') {
-          console.log(day.date);
-          console.log(av.startDate);
-          console.log(
-            !av.oneTime &&
-              day.date >= av.startDate &&
-              av.endDate &&
-              day.date <= av.endDate
-          );
-        }
         if (
           (day.date == av.startDate && av.oneTime) ||
           (!av.oneTime &&
