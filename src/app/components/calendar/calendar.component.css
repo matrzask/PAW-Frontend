@@ -1,0 +1,43 @@
+.container {
+  max-height: 300px;
+  overflow: auto;
+}
+
+.calendar {
+  border-collapse: collapse;
+}
+
+.calendar td + td,
+.calendar th + th { border-left: 1px solid #ddd; }
+.calendar tr + tr { border-top: 1px solid #ddd; }
+
+.calendar th {
+  position: sticky;
+  top: 0;
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+}
+
+.calendar td {
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 10px;
+}
+
+.timeslot {
+  font-style: italic;
+}
+
+.date {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.currentDay, .currentTimeslot {
+  color: #007bff !important;
+  font-weight: bold !important;
+}

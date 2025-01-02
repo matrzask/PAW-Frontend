@@ -1,1 +1,27 @@
-Calendar
+<div class="container">
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th></th>
+        <th *ngFor="let day of days">
+          <div [ngClass]="{currentDay: isCurrentDay(day.date)}">{{ day.dayOfWeek }}</div>
+          <div class="date">{{ day.date | date: 'dd-MM' }}</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let timeslot of timeslots">
+        <td class="timeslot" [ngClass]="{currentTimeslot: isCurrentTimeslot(timeslot)}"
+            *ngIf="isCurrentTimeslot(timeslot); else notCurrent" #currentTimeslot>
+            {{ timeslot }}
+        </td>
+        <ng-template #notCurrent>
+          <td class="timeslot">{{ timeslot }}</td>
+        </ng-template>
+        <td *ngFor="let day of daysOfWeek">
+          slot
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

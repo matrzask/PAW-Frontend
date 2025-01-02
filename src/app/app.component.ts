@@ -4,7 +4,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CalendarComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
