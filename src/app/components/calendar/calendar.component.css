@@ -1,5 +1,5 @@
 .container {
-  max-height: 300px;
+  max-height: 400px;
   overflow: auto;
 }
 
@@ -21,11 +21,16 @@
   padding: 10px;
 }
 
+.day {
+  min-width: 80px;
+}
+
 .calendar td {
   background-color: #fff;
   color: #333;
   text-align: center;
-  padding: 10px;
+  height: 40px;
+  min-width: 50px;
 }
 
 .timeslot {

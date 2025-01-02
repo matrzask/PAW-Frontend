@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th></th>
-        <th *ngFor="let day of days">
+        <th *ngFor="let day of days" class="day">
           <div [ngClass]="{currentDay: isCurrentDay(day.date)}">{{ day.dayOfWeek }}</div>
           <div class="date">{{ day.date | date: 'dd-MM' }}</div>
         </th>
@@ -18,8 +18,8 @@
         <ng-template #notCurrent>
           <td class="timeslot">{{ timeslot }}</td>
         </ng-template>
-        <td *ngFor="let day of daysOfWeek">
-          slot
+        <td *ngFor="let day of days">
+          <app-calendar-slot [consulation]="getConsultation(day.date, timeslot)" [date]="getDateWithTimeslot(day.date, timeslot)"></app-calendar-slot>
         </td>
       </tr>
     </tbody>

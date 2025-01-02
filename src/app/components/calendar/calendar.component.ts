@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { CalendarSlotComponent } from '../calendar-slot/calendar-slot.component';
+import { Consultation } from '../../model/consultation.interface';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: 'calendar.component.html',
   styleUrl: 'calendar.component.css',
-  imports: [CommonModule],
+  imports: [CommonModule, CalendarSlotComponent],
 })
 export class CalendarComponent {
+  @Input() doctorId!: number;
+
   @ViewChild('currentTimeslot', { static: false })
   currentTimeslotElement!: ElementRef;
 
@@ -28,6 +32,8 @@ export class CalendarComponent {
     const minutes = i % 2 === 0 ? '00' : '30';
     return `${hours.toString().padStart(2, '0')}:${minutes}`;
   });
+
+  consultations: Consultation[] = [];
 
   ngOnInit() {
     const startOfWeek = this.getStartOfWeek(new Date());
@@ -72,5 +78,23 @@ export class CalendarComponent {
       minutes < 30 ? '00' : '30'
     }`;
     return timeslot === currentTimeslot;
+  }
+
+  getConsultation(date: Date, timeslot: String): Consultation | undefined {
+    return this.consultations.find(
+      (c) =>
+        c.date.getDate() === date.getDate() &&
+        c.date.getMonth() === date.getMonth() &&
+        c.date.getFullYear() === date.getFullYear() &&
+        c.date.getHours() === parseInt(timeslot.slice(0, 2), 10) &&
+        c.date.getMinutes() === parseInt(timeslot.slice(3), 10)
+    );
+  }
+
+  getDateWithTimeslot(date: Date, timeslot: string): Date {
+    const [hours, minutes] = timeslot.split(':').map((n) => parseInt(n, 10));
+    const newDate = new Date(date);
+    newDate.setHours(hours, minutes);
+    return newDate;
   }
 }
