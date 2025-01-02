@@ -2,7 +2,7 @@
   <table class="calendar">
     <thead>
       <tr>
-        <th></th>
+        <th>Start<br>time</th>
         <th *ngFor="let day of days" class="day">
           <div [ngClass]="{currentDay: isCurrentDay(day.date)}">{{ day.dayOfWeek }}</div>
           <div class="date">{{ day.date | date: 'dd-MM' }}</div>
@@ -10,16 +10,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let timeslot of timeslots">
-        <td class="timeslot" [ngClass]="{currentTimeslot: isCurrentTimeslot(timeslot)}"
-            *ngIf="isCurrentTimeslot(timeslot); else notCurrent" #currentTimeslot>
-            {{ timeslot }}
+      <tr *ngFor="let time of times">
+        <td class="timeslot" [ngClass]="{currentTimeslot: isCurrentTimeslot(time)}"
+            *ngIf="isCurrentTimeslot(time); else notCurrent" #currentTimeslot>
+            {{ time }}
         </td>
         <ng-template #notCurrent>
-          <td class="timeslot">{{ timeslot }}</td>
+          <td class="timeslot">{{ time }}</td>
         </ng-template>
         <td *ngFor="let day of days">
-          <app-calendar-slot [consulation]="getConsultation(day.date, timeslot)" [date]="getDateWithTimeslot(day.date, timeslot)"></app-calendar-slot>
+          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())" [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}"></app-calendar-slot>
         </td>
       </tr>
     </tbody>

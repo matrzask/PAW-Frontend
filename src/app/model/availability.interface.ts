@@ -4,5 +4,5 @@ export interface Availability {
   startDate: Date;
   endDate?: Date;
   daysOfWeek?: string[];
-  times?: { start: string; end: string }[]; // e.g., [{start: '08:00', end: '12:30'}]
+  times: { start: string; end: string }[]; // e.g., [{start: '08:00', end: '9:00'}] includes 08:00, 08:30
 }

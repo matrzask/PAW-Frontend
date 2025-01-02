@@ -10,30 +10,23 @@ import { EventEmitter, Output } from '@angular/core';
   imports: [CommonModule],
 })
 export class CalendarSlotComponent {
-  @Input() consulation?: Consultation;
-  @Input() date?: Date;
+  @Input() timeslot!: { date: Date; consultation?: Consultation };
   @Input() cancelled = false;
 
   @Output() reserve = new EventEmitter<Date>();
 
   onReserve(): void {
-    if (this.date) {
-      this.reserve.emit(this.date);
-    }
-  }
-
-  constructor() {
-    if (!this.date) {
-      this.date = this.consulation?.date ?? new Date(0);
+    if (this.timeslot.date) {
+      this.reserve.emit(this.timeslot.date);
     }
   }
 
   isReserved(): boolean {
-    return !!this.consulation;
+    return !!this.timeslot.consultation;
   }
 
   isExpired(): boolean {
-    return this.date ? this.date < new Date() : false;
+    return this.timeslot.date ? this.timeslot.date < new Date() : false;
   }
 
   getColor(): string {
@@ -47,7 +40,7 @@ export class CalendarSlotComponent {
       return 'lightblue';
     }
 
-    switch (this.consulation?.type) {
+    switch (this.timeslot.consultation?.type) {
       case 'First Consultation':
         return 'green';
       case 'Follow-up':
@@ -67,11 +60,11 @@ export class CalendarSlotComponent {
     if (this.cancelled) {
       return 'Cancelled';
     }
+    if (this.isReserved()) {
+      return this.timeslot.consultation?.type ?? '';
+    }
     if (this.isExpired()) {
       return 'Expired';
-    }
-    if (this.isReserved()) {
-      return this.consulation?.type ?? '';
     }
     return 'Available';
   }

@@ -1,0 +1,25 @@
+{
+  "availability": [
+    {
+      "doctorId": 1,
+      "oneTime": false,
+      "startDate": "2025-01-01T00:00:00Z",
+      "endDate": "2025-12-31T00:00:00Z",
+      "daysOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "times": [
+        { "start": "08:00", "end": "15:00" },
+        { "start": "16:00", "end": "20:00" }
+      ]
+    },
+    {
+      "doctorId": 1,
+      "oneTime": false,
+      "startDate": "2025-01-01T00:00:00Z",
+      "endDate": "2025-12-31T00:00:00Z",
+      "daysOfWeek": ["Saturday"],
+      "times": [
+        { "start": "09:00", "end": "16:00" }
+      ]
+    }
+  ]
+}
