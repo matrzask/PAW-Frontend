@@ -1,0 +1,40 @@
+form {
+  clip-path: inset(0% 0% 100% 0%);
+  transition: clip-path 0.25s ease-out;
+  display: flex;
+  flex-direction: column;
+  background-color: lightblue;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+}
+
+form.visible {
+  clip-path: inset(0% 0% 0% 0%);
+}
+
+.show {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  width:100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.show:hover {
+  background-color: #0056b3;
+}
+
+.container:has(form.visible) .show {
+  border-radius: 5px 5px 0 0;
+}
+
+.container {
+  width:300px;
+}
+
+.section-label {
+  font-weight: bold;
+}
