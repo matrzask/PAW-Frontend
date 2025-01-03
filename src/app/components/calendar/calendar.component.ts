@@ -97,7 +97,6 @@ export class CalendarComponent {
 
   private fillSlots() {
     this.timeslots.clear();
-    this.times = [];
 
     this.availabilityService
       .getAvailability(this.doctorId)
@@ -186,6 +185,7 @@ export class CalendarComponent {
     const endTime = new Date();
     endTime.setHours(latestHours, latestMinutes, 0, 0);
 
+    this.times = [];
     while (startTime < endTime) {
       const hours = startTime.getHours();
       const minutes = startTime.getMinutes();
