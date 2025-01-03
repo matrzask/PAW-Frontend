@@ -47,6 +47,23 @@ export class CalendarComponent {
       date.setHours(0, 0, 0, 0);
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
+    this.fillSlots();
+  }
+
+  changeWeek(weeks: number) {
+    const startOfWeek = this.getStartOfWeek(this.days[0].date);
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i + weeks * 7);
+      date.setHours(0, 0, 0, 0);
+      this.days[i] = { date, dayOfWeek: this.daysOfWeek[i] };
+    }
+    this.fillSlots();
+  }
+
+  private fillSlots() {
+    this.timeslots.clear();
+    this.times = [];
 
     this.availabilityService
       .getAvailability(this.doctorId)

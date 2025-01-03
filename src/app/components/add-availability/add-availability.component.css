@@ -22,6 +22,10 @@ form.visible {
   border-radius: 5px;
 }
 
+.show:hover {
+  background-color: #0056b3;
+}
+
 .container:has(form.visible) .show {
   border-radius: 5px 5px 0 0;
 }

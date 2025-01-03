@@ -1,4 +1,8 @@
-<div class="container">
+<div class="buttons">
+  <button (click)="changeWeek(-1)" class="changeWeek">Previous week</button>
+  <button (click)="changeWeek(1)" class="changeWeek">Next week</button>
+</div>
+<div class="calendar-container">
   <table class="calendar">
     <thead>
       <tr>
