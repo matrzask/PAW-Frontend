@@ -1,0 +1,39 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <input type="checkbox" class="form-control" id="oneTime" formControlName="oneTime">
+    <label for="oneTime">One time</label>
+  </div>
+  <div class="form-group">
+    <label for="startDate">Start date</label>
+    <input type="date" class="form-control" id="startDate" formControlName="startDate">
+  </div>
+  <div class="form-group" *ngIf="!form.get('oneTime')?.value">
+    <label for="endDate">End date</label>
+    <input type="date" class="form-control" id="endDate" formControlName="endDate">
+  </div>
+  <div class="form-group" *ngIf="!form.get('oneTime')?.value">
+    <label>Days of the week</label>
+    <div *ngFor="let day of daysOfWeek; let i = index">
+      <input type="checkbox" (change)="onDayChange(day, $event)">
+      <label>{{ day }}</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Times</label>
+    <div formArrayName="times">
+      <div *ngFor="let time of timesFormArray.controls; let i = index" [formGroupName]="i">
+        <div class="form-group">
+          <label for="start">Start time</label>
+          <input type="time" class="form-control" formControlName="start">
+        </div>
+        <div class="form-group">
+          <label for="end">End time</label>
+          <input type="time" class="form-control" formControlName="end">
+        </div>
+        <button type="button" class="btn btn-danger" (click)="removeTime(i)">Remove</button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary" (click)="addTime()">Add Time</button>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

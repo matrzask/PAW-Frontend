@@ -26,4 +26,20 @@ export class AvailabilityService {
         )
       );
   }
+
+  addAvailability(availability: Availability) {
+    const formattedAvailability = {
+      ...availability,
+      startDate: new Date(availability.startDate).toISOString(),
+      endDate: availability.endDate
+        ? new Date(availability.endDate).toISOString()
+        : undefined,
+      times: availability.times.map((time) => ({
+        start: time.start,
+        end: time.end,
+      })),
+    };
+
+    return this.http.post<Availability>(this.path, formattedAvailability);
+  }
 }
