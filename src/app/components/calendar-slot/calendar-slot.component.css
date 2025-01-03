@@ -13,10 +13,10 @@ div {
   justify-content: center;
 }
 
-.free:not(.expired) {
+.free {
   cursor: pointer;
 }
 
-.free:not(.expired):hover {
+.free:hover {
   background-color: #b0e0e6 !important;
 }

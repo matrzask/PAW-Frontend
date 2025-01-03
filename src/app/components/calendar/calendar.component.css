@@ -47,6 +47,10 @@
   font-weight: bold !important;
 }
 
+.absence {
+  color: red !important;
+}
+
 .buttons {
   display: flex;
   gap: 10px;

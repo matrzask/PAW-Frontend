@@ -8,7 +8,7 @@
       <tr>
         <th>Start<br>time</th>
         <th *ngFor="let day of days" class="day">
-          <div [ngClass]="{currentDay: isCurrentDay(day.date)}">{{ day.dayOfWeek }}</div>
+          <div [ngClass]="{currentDay: isCurrentDay(day.date), absence: isAbsent(day.date)}">{{ day.dayOfWeek }}</div>
           <div class="date">{{ day.date | date: 'dd-MM' }}</div>
         </th>
       </tr>
@@ -23,7 +23,7 @@
           <td class="timeslot">{{ time }}</td>
         </ng-template>
         <td *ngFor="let day of days">
-          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())" [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}"></app-calendar-slot>
+          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())" [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)"></app-calendar-slot>
         </td>
       </tr>
     </tbody>

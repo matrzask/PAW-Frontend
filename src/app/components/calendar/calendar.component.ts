@@ -4,6 +4,8 @@ import { CalendarSlotComponent } from '../calendar-slot/calendar-slot.component'
 import { Consultation } from '../../model/consultation.interface';
 import { Availability } from '../../model/availability.interface';
 import { AvailabilityService } from '../../services/availability.service';
+import { AbsenceService } from '../../services/absence.service';
+import { Absence } from '../../model/absence.interface';
 
 @Component({
   selector: 'app-calendar',
@@ -34,9 +36,14 @@ export class CalendarComponent {
   times: string[] = [];
 
   consultations: Consultation[] = [];
+  absences: Absence[] = [];
+  absentDays: Set<number> = new Set();
   timeslots: Map<number, Consultation | undefined> = new Map();
 
-  constructor(private availabilityService: AvailabilityService) {}
+  constructor(
+    private availabilityService: AvailabilityService,
+    private absenceService: AbsenceService
+  ) {}
 
   ngOnInit() {
     const startOfWeek = this.getStartOfWeek(new Date());
@@ -46,6 +53,12 @@ export class CalendarComponent {
       date.setHours(0, 0, 0, 0);
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
+
+    this.getAbsences();
+    this.absenceService.subscribeForChange().subscribe(() => {
+      this.getAbsences();
+    });
+
     this.fillSlots();
     this.availabilityService.subscribeForChange().subscribe(() => {
       this.fillSlots();
@@ -61,6 +74,25 @@ export class CalendarComponent {
       this.days[i] = { date, dayOfWeek: this.daysOfWeek[i] };
     }
     this.fillSlots();
+  }
+
+  private getAbsences() {
+    this.absenceService.getAbsence(this.doctorId).subscribe((data) => {
+      this.absences = data;
+      console.log(this.absences);
+
+      this.absentDays.clear();
+      for (let absence of this.absences) {
+        let startDate = new Date(absence.startDate);
+        startDate.setHours(0, 0, 0, 0);
+        let endDate = absence.endDate ? new Date(absence.endDate) : startDate;
+        endDate.setHours(0, 0, 0, 0);
+        while (startDate <= endDate) {
+          this.absentDays.add(startDate.getTime());
+          startDate.setDate(startDate.getDate() + 1);
+        }
+      }
+    });
   }
 
   private fillSlots() {
@@ -173,6 +205,10 @@ export class CalendarComponent {
       date.getMonth() === today.getMonth() &&
       date.getFullYear() === today.getFullYear()
     );
+  }
+
+  isAbsent(date: Date): boolean {
+    return this.absentDays.has(date.getTime());
   }
 
   isCurrentTimeslot(timeslot: string): boolean {

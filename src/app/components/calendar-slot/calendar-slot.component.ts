@@ -29,9 +29,13 @@ export class CalendarSlotComponent {
     return this.timeslot.date ? this.timeslot.date < new Date() : false;
   }
 
+  isFree(): boolean {
+    return !this.isReserved() && !this.isExpired() && !this.cancelled;
+  }
+
   getColor(): string {
     if (this.cancelled) {
-      return 'red';
+      return 'lightcoral';
     }
     if (this.isExpired()) {
       return 'lightgray';
