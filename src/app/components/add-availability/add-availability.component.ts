@@ -101,5 +101,7 @@ export class AddAvailabilityComponent {
 
   onSubmit() {
     this.addAvailability();
+    this.formVisible = false;
+    this.form.reset();
   }
 }

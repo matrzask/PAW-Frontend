@@ -22,13 +22,13 @@
     </div>
     <div class="form-group">
       <label class="section-label">Times</label>
-      <div formArrayName="times">
+      <div formArrayName="times" class="times">
         <div *ngFor="let time of timesFormArray.controls; let i = index" [formGroupName]="i">
-          <div class="form-group">
+          <div class="form-group" class="time">
             <label for="start">Start time</label>
             <input type="time" class="form-control" formControlName="start">
           </div>
-          <div class="form-group">
+          <div class="form-group" class="time">
             <label for="end">End time</label>
             <input type="time" class="form-control" formControlName="end">
           </div>

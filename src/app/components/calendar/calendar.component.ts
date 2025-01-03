@@ -44,6 +44,7 @@ export class CalendarComponent {
     for (let i = 0; i < 7; i++) {
       const date = new Date(startOfWeek);
       date.setDate(startOfWeek.getDate() + i);
+      date.setHours(0, 0, 0, 0);
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
 
@@ -78,9 +79,15 @@ export class CalendarComponent {
       av.startDate.setHours(0, 0, 0, 0);
       if (av.endDate) av.endDate.setHours(23, 59, 59, 99);
       for (let day of this.days) {
-        if (av.daysOfWeek && !av.daysOfWeek.includes(day.dayOfWeek)) continue;
         if (
-          (day.date == av.startDate && av.oneTime) ||
+          !av.oneTime &&
+          av.daysOfWeek &&
+          !av.daysOfWeek.includes(day.dayOfWeek)
+        )
+          continue;
+
+        if (
+          (day.date.getTime() === av.startDate.getTime() && av.oneTime) ||
           (!av.oneTime &&
             day.date >= av.startDate &&
             av.endDate &&

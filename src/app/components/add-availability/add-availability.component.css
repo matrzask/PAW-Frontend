@@ -33,3 +33,15 @@ form.visible {
 .section-label {
   font-weight: bold;
 }
+
+.time {
+  display: flex;
+  gap: 10px;
+}
+
+.times {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
