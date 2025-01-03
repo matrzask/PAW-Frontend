@@ -21,6 +21,8 @@ export class CalendarComponent {
   @ViewChild('currentTimeslot', { static: false })
   currentTimeslotElement!: ElementRef;
 
+  private timeslotsLoaded = false;
+
   daysOfWeek: string[] = [
     'Monday',
     'Tuesday',
@@ -79,7 +81,6 @@ export class CalendarComponent {
   private getAbsences() {
     this.absenceService.getAbsence(this.doctorId).subscribe((data) => {
       this.absences = data;
-      console.log(this.absences);
 
       this.absentDays.clear();
       for (let absence of this.absences) {
@@ -107,7 +108,7 @@ export class CalendarComponent {
       });
   }
 
-  ngAfterViewInit() {
+  scrollToCurrentTime() {
     setTimeout(() => {
       if (this.currentTimeslotElement) {
         this.currentTimeslotElement.nativeElement.scrollIntoView({
@@ -115,7 +116,7 @@ export class CalendarComponent {
           block: 'center',
         });
       }
-    }, 0);
+    }, 1);
   }
 
   private getStartOfWeek(date: Date): Date {
@@ -161,6 +162,10 @@ export class CalendarComponent {
           }
         }
       }
+    }
+    if (!this.timeslotsLoaded) {
+      this.timeslotsLoaded = true;
+      this.scrollToCurrentTime();
     }
   }
 
