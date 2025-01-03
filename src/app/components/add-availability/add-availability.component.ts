@@ -41,6 +41,12 @@ export class AddAvailabilityComponent {
     times: new FormArray([]),
   });
 
+  formVisible: boolean = false;
+
+  toggleForm() {
+    this.formVisible = !this.formVisible;
+  }
+
   onDayChange(day: string, event: Event) {
     const checkbox = event.target as HTMLInputElement;
     const dayIndex = this.daysOfWeek.indexOf(day);
