@@ -73,6 +73,19 @@
           "end": "09:00"
         }
       ]
+    },
+    {
+      "id": "e2d5",
+      "doctorId": "1",
+      "oneTime": true,
+      "startDate": "2024-12-31T00:00:00.000Z",
+      "daysOfWeek": [],
+      "times": [
+        {
+          "start": "08:00",
+          "end": "12:00"
+        }
+      ]
     }
   ]
 }

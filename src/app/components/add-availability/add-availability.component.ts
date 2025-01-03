@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
   templateUrl: 'add-availability.component.html',
   styleUrls: ['add-availability.component.css'],
   imports: [CommonModule, ReactiveFormsModule],
-  providers: [AvailabilityService],
 })
 export class AddAvailabilityComponent {
   constructor(private availabilityService: AvailabilityService) {}

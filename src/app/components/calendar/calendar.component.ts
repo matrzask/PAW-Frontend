@@ -10,7 +10,6 @@ import { AvailabilityService } from '../../services/availability.service';
   templateUrl: 'calendar.component.html',
   styleUrl: 'calendar.component.css',
   imports: [CommonModule, CalendarSlotComponent],
-  providers: [AvailabilityService],
 })
 export class CalendarComponent {
   @Input() doctorId!: number;
@@ -48,6 +47,9 @@ export class CalendarComponent {
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
     this.fillSlots();
+    this.availabilityService.subscribeForChange().subscribe(() => {
+      this.fillSlots();
+    });
   }
 
   changeWeek(weeks: number) {

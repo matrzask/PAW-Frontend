@@ -2,11 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Availability } from '../model/availability.interface';
 import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AvailabilityService {
+  private availabilityChangedSubject = new Subject<void>();
+
   constructor(private http: HttpClient) {}
 
   readonly path = 'http://localhost:3000/availability';
@@ -40,6 +43,14 @@ export class AvailabilityService {
       })),
     };
 
-    return this.http.post<Availability>(this.path, formattedAvailability);
+    return this.http.post<Availability>(this.path, formattedAvailability).pipe(
+      map(() => {
+        this.availabilityChangedSubject.next();
+      })
+    );
+  }
+
+  subscribeForChange(): Observable<void> {
+    return this.availabilityChangedSubject.asObservable();
   }
 }
