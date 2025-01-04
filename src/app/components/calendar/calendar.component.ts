@@ -6,6 +6,7 @@ import { Availability } from '../../model/availability.interface';
 import { AvailabilityService } from '../../services/availability.service';
 import { AbsenceService } from '../../services/absence.service';
 import { Absence } from '../../model/absence.interface';
+import { ConsultationService } from '../../services/consultation.service';
 
 @Component({
   selector: 'app-calendar',
@@ -44,7 +45,8 @@ export class CalendarComponent {
 
   constructor(
     private availabilityService: AvailabilityService,
-    private absenceService: AbsenceService
+    private absenceService: AbsenceService,
+    private consultationService: ConsultationService
   ) {}
 
   ngOnInit() {
@@ -55,13 +57,16 @@ export class CalendarComponent {
       date.setHours(0, 0, 0, 0);
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
+    this.getConsultations();
+    this.consultationService.subscribeForChange().subscribe(() => {
+      this.getConsultations();
+    });
 
     this.getAbsences();
     this.absenceService.subscribeForChange().subscribe(() => {
       this.getAbsences();
     });
 
-    this.fillSlots();
     this.availabilityService.subscribeForChange().subscribe(() => {
       this.fillSlots();
     });
@@ -79,7 +84,7 @@ export class CalendarComponent {
   }
 
   private getAbsences() {
-    this.absenceService.getAbsence(this.doctorId).subscribe((data) => {
+    this.absenceService.getAbsences(this.doctorId).subscribe((data) => {
       this.absences = data;
 
       this.absentDays.clear();
@@ -153,9 +158,13 @@ export class CalendarComponent {
             endTime.setHours(endHours, endMinutes, 0, 0);
 
             while (startTime < endTime) {
+              if (startTime.getDate() == 4 && startTime.getHours() == 19) {
+                console.log(startTime);
+                console.log(this.consultations);
+              }
               this.timeslots.set(
                 startTime.getTime(),
-                this.getConsultation(day.date, times.start)
+                this.getConsultation(startTime)
               );
               startTime.setMinutes(startTime.getMinutes() + 30);
             }
@@ -203,6 +212,15 @@ export class CalendarComponent {
     }
   }
 
+  getConsultations() {
+    this.consultationService
+      .getConsultations(this.doctorId)
+      .subscribe((data) => {
+        this.consultations = data;
+        this.fillSlots();
+      });
+  }
+
   isCurrentDay(date: Date): boolean {
     const today = new Date();
     return (
@@ -226,15 +244,9 @@ export class CalendarComponent {
     return timeslot === currentTimeslot;
   }
 
-  getConsultation(date: Date, timeslot: String): Consultation | undefined {
-    return this.consultations.find(
-      (c) =>
-        c.date.getDate() === date.getDate() &&
-        c.date.getMonth() === date.getMonth() &&
-        c.date.getFullYear() === date.getFullYear() &&
-        c.date.getHours() === parseInt(timeslot.slice(0, 2), 10) &&
-        c.date.getMinutes() === parseInt(timeslot.slice(3), 10)
-    );
+  getConsultation(date: Date): Consultation | undefined {
+    let time = date.getTime();
+    return this.consultations.find((c) => c.date.getTime() === time);
   }
 
   getDateWithTimeslot(date: Date, timeslot: string): Date {

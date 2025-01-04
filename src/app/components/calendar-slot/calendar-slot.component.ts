@@ -17,6 +17,7 @@ export class CalendarSlotComponent {
   showPopup = false;
 
   onReserve(): void {
+    console.log(this.timeslot);
     if (!this.isFree()) return;
     if (this.timeslot.date) {
       this.showPopup = true;
