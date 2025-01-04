@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
   FormControl,
@@ -8,6 +14,8 @@ import {
 } from '@angular/forms';
 import { ConsultationType } from '../../enums/consultation-type.enum';
 import { Gender } from '../../enums/gender.enum';
+import { ConsultationService } from '../../services/consultation.service';
+import { Consultation } from '../../model/consultation.interface';
 
 @Component({
   selector: 'reservation-pop-up',
@@ -16,6 +24,8 @@ import { Gender } from '../../enums/gender.enum';
   imports: [CommonModule, DatePipe, ReactiveFormsModule],
 })
 export class ReservationPopUpComponent {
+  constructor(private consultationService: ConsultationService) {}
+
   @Input() visible = false;
   @Input() timeslotDate!: Date;
   @Input() maxDuration = 1;
@@ -28,22 +38,66 @@ export class ReservationPopUpComponent {
   consultationTypeOptions = Object.values(ConsultationType);
 
   form = new FormGroup({
-    duration: new FormControl<number>(30, Validators.required),
+    duration: new FormControl<number>(30, [
+      Validators.required,
+      Validators.min(30),
+      Validators.max(this.maxDuration * 30),
+    ]),
     type: new FormControl<ConsultationType>(
       ConsultationType.FirstConsultation,
       Validators.required
     ),
-    patient: new FormControl<string>('', Validators.required),
+    patient: new FormControl<string>('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     patientGender: new FormControl<Gender>(Gender.Male, Validators.required),
     patientAge: new FormControl<number>(0, Validators.required),
     details: new FormControl<string>(''),
   });
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['maxDuration']) {
+      this.updateDurationValidator();
+    }
+  }
+
+  updateDurationValidator() {
+    this.form.controls['duration'].setValidators([
+      Validators.required,
+      Validators.min(30),
+      Validators.max(this.maxDuration * 30),
+    ]);
+    this.form.controls['duration'].updateValueAndValidity();
+  }
+
   onClose() {
     this.close.emit();
   }
 
+  mapFormValues(): Consultation {
+    return {
+      doctorId: this.doctorId,
+      date: this.timeslotDate,
+      duration: this.form.controls['duration'].value! / 30,
+      type: this.form.controls['type'].value!,
+      patient: this.form.controls['patient'].value ?? '',
+      patientGender: this.form.controls['patientGender'].value!,
+      patientAge: this.form.controls['patientAge'].value ?? 0,
+      details: this.form.controls['details'].value ?? '',
+    };
+  }
+
   onSubmit() {
+    if (this.form.invalid) {
+      console.log(this.form.get('duration')?.value, this.maxDuration * 30);
+      return;
+    }
+    this.consultationService
+      .addConsultation(this.mapFormValues())
+      .subscribe((consultation) => {
+        console.log('Consultation added:', consultation);
+      });
     this.confirm.emit();
   }
 
