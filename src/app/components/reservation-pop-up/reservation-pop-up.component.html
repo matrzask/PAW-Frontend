@@ -1,0 +1,8 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup">
+    <h2>Reserve Timeslot</h2>
+    <p>Do you want to reserve the timeslot on {{ timeslotDate | date: 'short' }}?</p>
+    <button (click)="onConfirm()">Confirm</button>
+    <button (click)="onClose()">Cancel</button>
+  </div>
+</div>

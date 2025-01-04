@@ -1,3 +1,5 @@
-<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (onClick)="onReserve()" *ngIf="!cancelled || isReserved()">
+<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (click)="onReserve()" *ngIf="!cancelled || isReserved()">
   {{ getText() }}
 </div>
+
+<reservation-pop-up [visible]="showPopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()"></reservation-pop-up>

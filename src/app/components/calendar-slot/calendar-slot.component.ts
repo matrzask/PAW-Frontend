@@ -1,24 +1,34 @@
 import { Component, Input } from '@angular/core';
 import { Consultation } from '../../model/consultation.interface';
 import { CommonModule } from '@angular/common';
-import { EventEmitter, Output } from '@angular/core';
+import { ReservationPopUpComponent } from '../reservation-pop-up/reservation-pop-up.component';
 
 @Component({
   selector: 'app-calendar-slot',
   templateUrl: 'calendar-slot.component.html',
   styleUrls: ['calendar-slot.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, ReservationPopUpComponent],
 })
 export class CalendarSlotComponent {
   @Input() timeslot!: { date: Date; consultation?: Consultation };
   @Input() cancelled = false;
 
-  @Output() reserve = new EventEmitter<Date>();
+  showPopup = false;
 
   onReserve(): void {
+    if (!this.isFree()) return;
     if (this.timeslot.date) {
-      this.reserve.emit(this.timeslot.date);
+      console.log('Reserving timeslot for', this.timeslot.date);
+      this.showPopup = true;
     }
+  }
+
+  onClosePopup() {
+    this.showPopup = false;
+  }
+
+  onConfirmReservation() {
+    this.showPopup = false;
   }
 
   isReserved(): boolean {
