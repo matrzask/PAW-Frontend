@@ -14,7 +14,7 @@ export class ConsultationService {
 
   readonly path = 'http://localhost:3000/consultation';
 
-  getConsultation(doctorId: string) {
+  getConsultations(doctorId: string) {
     return this.http
       .get<Consultation[]>(`${this.path}?doctorId=${doctorId}`)
       .pipe(
@@ -30,7 +30,7 @@ export class ConsultationService {
   addConsultation(consultation: Consultation) {
     const formattedConsultation = {
       ...consultation,
-      Date: new Date(consultation.date).toISOString(),
+      date: new Date(consultation.date).toISOString(),
     };
 
     return this.http.post<Consultation>(this.path, formattedConsultation).pipe(

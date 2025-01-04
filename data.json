@@ -91,16 +91,15 @@
   "absence": [],
   "consultation": [
     {
-      "id": "c3fc",
+      "id": "286f",
       "doctorId": "1",
-      "date": "2025-01-04T19:00:00.000Z",
+      "date": "2025-01-04T18:30:00.000Z",
       "duration": 3,
       "type": "First Consultation",
       "patient": "Maciej Trzaskacz",
       "patientGender": "Male",
       "patientAge": 22,
-      "details": "Lorem ipsum dolor sit amet.",
-      "Date": "2025-01-04T19:00:00.000Z"
+      "details": "Lorem ipsum dolor sit amet."
     }
   ]
 }
