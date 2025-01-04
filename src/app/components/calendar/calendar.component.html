@@ -22,10 +22,12 @@
         <ng-template #notCurrent>
           <td class="timeslot">{{ time }}</td>
         </ng-template>
-        <td *ngFor="let day of days">
-          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())"
-          [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)" [maxDuration]="maxTimeSlotDuration(getDateWithTimeslot(day.date, time))"></app-calendar-slot>
-        </td>
+        <ng-container *ngFor="let day of days">
+          <td [attr.rowspan]="timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration" *ngIf="!skipTimeslot.get(getDateWithTimeslot(day.date, time).getTime())" [ngStyle]="{height: (timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration ?? 1) * 40 + 'px'}">
+            <app-calendar-slot class="slot" *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())"
+            [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)" [maxDuration]="maxTimeSlotDuration(getDateWithTimeslot(day.date, time))"></app-calendar-slot>
+          </td>
+        </ng-container>
       </tr>
     </tbody>
   </table>

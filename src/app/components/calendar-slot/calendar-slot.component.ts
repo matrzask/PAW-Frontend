@@ -17,7 +17,6 @@ export class CalendarSlotComponent {
   showPopup = false;
 
   onReserve(): void {
-    console.log(this.timeslot);
     if (!this.isFree()) return;
     if (this.timeslot.date) {
       this.showPopup = true;
@@ -57,17 +56,17 @@ export class CalendarSlotComponent {
 
     switch (this.timeslot.consultation?.type) {
       case 'First Consultation':
-        return 'green';
+        return 'lightgreen';
       case 'Follow-up':
-        return 'blue';
+        return 'Aquamarine';
       case 'Check-up':
         return 'orange';
       case 'Emergency':
         return 'red';
       case 'Other':
-        return 'purple';
+        return 'CadetBlue';
       default:
-        return 'black';
+        return 'white';
     }
   }
 

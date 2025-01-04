@@ -42,6 +42,7 @@ export class CalendarComponent {
   absences: Absence[] = [];
   absentDays: Set<number> = new Set();
   timeslots: Map<number, Consultation | undefined> = new Map();
+  skipTimeslot: Map<number, Consultation | undefined> = new Map();
 
   constructor(
     private availabilityService: AvailabilityService,
@@ -158,14 +159,17 @@ export class CalendarComponent {
             endTime.setHours(endHours, endMinutes, 0, 0);
 
             while (startTime < endTime) {
-              if (startTime.getDate() == 4 && startTime.getHours() == 19) {
-                console.log(startTime);
-                console.log(this.consultations);
+              let consultation = this.getConsultation(startTime);
+              this.timeslots.set(startTime.getTime(), consultation);
+              if (consultation && consultation.duration > 1) {
+                let start = startTime.getTime();
+                for (let i = 1; i < consultation.duration; i++) {
+                  this.skipTimeslot.set(
+                    start + i * 30 * 60 * 1000,
+                    consultation
+                  );
+                }
               }
-              this.timeslots.set(
-                startTime.getTime(),
-                this.getConsultation(startTime)
-              );
               startTime.setMinutes(startTime.getMinutes() + 30);
             }
           }
