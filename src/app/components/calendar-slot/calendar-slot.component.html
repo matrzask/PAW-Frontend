@@ -1,4 +1,4 @@
-<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (click)="onReserve()" *ngIf="!cancelled || isReserved()" (mousemove)="toggleTooltip(true, $event)" (mouseleave)="toggleTooltip(false, $event)">
+<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (click)="onClick()" *ngIf="!cancelled || isReserved()" (mousemove)="toggleTooltip(true, $event)" (mouseleave)="toggleTooltip(false, $event)">
   {{ getText() }}
   <div class="tooltip" *ngIf="showTooltip && timeslot.consultation" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
     <p>Patient {{ timeslot.consultation.patient }}, Age {{ timeslot.consultation.patientAge }}</p>
@@ -6,4 +6,5 @@
   </div>
 </div>
 
-<reservation-pop-up [visible]="showPopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()" [maxDuration]="maxDuration"></reservation-pop-up>
+<reservation-pop-up [visible]="showReservePopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()" [maxDuration]="maxDuration"></reservation-pop-up>
+<cancel-consultation [visible]="showCancelPopup" [consultation]="timeslot.consultation!" (confirm)="onConfirmCancellation()" (close)="onClosePopup()"> </cancel-consultation>

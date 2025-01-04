@@ -40,6 +40,14 @@ export class ConsultationService {
     );
   }
 
+  deleteConsultation(consultationId: string) {
+    return this.http.delete(`${this.path}/${consultationId}`).pipe(
+      map(() => {
+        this.consultationChangedSubject.next();
+      })
+    );
+  }
+
   subscribeForChange(): Observable<void> {
     return this.consultationChangedSubject.asObservable();
   }

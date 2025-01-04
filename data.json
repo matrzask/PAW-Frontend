@@ -113,17 +113,6 @@
       "details": "Regular check-up"
     },
     {
-      "id": "b6e0",
-      "doctorId": "1",
-      "date": "2025-01-05T19:30:00.000Z",
-      "duration": 1,
-      "type": "Other",
-      "patient": "Adam Kowalski",
-      "patientGender": "Prefer not to say",
-      "patientAge": 32,
-      "details": "Just bored"
-    },
-    {
       "id": "f4c3",
       "doctorId": "1",
       "date": "2025-01-04T20:00:00.000Z",

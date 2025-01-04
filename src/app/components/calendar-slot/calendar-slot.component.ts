@@ -2,36 +2,50 @@ import { Component, Input } from '@angular/core';
 import { Consultation } from '../../model/consultation.interface';
 import { CommonModule } from '@angular/common';
 import { ReservationPopUpComponent } from '../reservation-pop-up/reservation-pop-up.component';
+import { CancelConsultationComponent } from '../cancel-consultation/cancel-consultation.component';
 
 @Component({
   selector: 'app-calendar-slot',
   templateUrl: 'calendar-slot.component.html',
   styleUrls: ['calendar-slot.component.css'],
-  imports: [CommonModule, ReservationPopUpComponent],
+  imports: [
+    CommonModule,
+    ReservationPopUpComponent,
+    CancelConsultationComponent,
+  ],
 })
 export class CalendarSlotComponent {
   @Input() timeslot!: { date: Date; consultation?: Consultation };
   @Input() cancelled = false;
   @Input() maxDuration = 1;
 
-  showPopup = false;
+  showReservePopup = false;
+  showCancelPopup = false;
   showTooltip = false;
   tooltipX = 0;
   tooltipY = 0;
 
-  onReserve(): void {
+  onClick(): void {
+    if (this.isReserved()) {
+      this.showCancelPopup = true;
+    }
     if (!this.isFree()) return;
     if (this.timeslot.date) {
-      this.showPopup = true;
+      this.showReservePopup = true;
     }
   }
 
   onClosePopup() {
-    this.showPopup = false;
+    this.showReservePopup = false;
+    this.showCancelPopup = false;
   }
 
   onConfirmReservation() {
-    this.showPopup = false;
+    this.showReservePopup = false;
+  }
+
+  onConfirmCancellation() {
+    this.showCancelPopup = false;
   }
 
   isReserved(): boolean {

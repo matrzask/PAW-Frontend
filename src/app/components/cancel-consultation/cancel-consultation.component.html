@@ -1,0 +1,18 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup">
+    <div class="top">
+      <button (click)="onClose()" class="close">X</button>
+    </div>
+    <h2>Cancel this consultation?</h2>
+    <div class="info" *ngIf="consultation">
+      <p>Patient {{ consultation.patient }}, Age {{ consultation.patientAge }}</p>
+      <p>Date: {{ consultation.date }}</p>
+      <p>Type: {{ consultation.type }}</p>
+      <p>Details: {{ consultation.details }}</p>
+    </div>
+    <div class="buttons">
+      <button (click)="onConfirm()">Yes</button>
+      <button (click)="onClose()">No</button>
+    </div>
+  </div>
+</div>
