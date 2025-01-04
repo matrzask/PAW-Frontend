@@ -14,7 +14,7 @@ export class AvailabilityService {
 
   readonly path = 'http://localhost:3000/availability';
 
-  getAvailability(doctorId: number) {
+  getAvailability(doctorId: string) {
     return this.http
       .get<Availability[]>(`${this.path}?doctorId=${doctorId}`)
       .pipe(

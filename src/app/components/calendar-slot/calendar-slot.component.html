@@ -2,4 +2,4 @@
   {{ getText() }}
 </div>
 
-<reservation-pop-up [visible]="showPopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()"></reservation-pop-up>
+<reservation-pop-up [visible]="showPopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()" [maxDuration]="maxDuration"></reservation-pop-up>

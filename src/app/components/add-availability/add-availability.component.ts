@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AddAvailabilityComponent {
   constructor(private availabilityService: AvailabilityService) {}
-  @Input() doctorId!: string;
+  doctorId: string = '1';
 
   daysOfWeek: string[] = [
     'Monday',

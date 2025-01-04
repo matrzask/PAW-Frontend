@@ -14,7 +14,7 @@ export class AbsenceService {
 
   readonly path = 'http://localhost:3000/absence';
 
-  getAbsence(doctorId: number) {
+  getAbsence(doctorId: string) {
     return this.http.get<Absence[]>(`${this.path}?doctorId=${doctorId}`).pipe(
       map((absence) =>
         absence.map((absence) => ({

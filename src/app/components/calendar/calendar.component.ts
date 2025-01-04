@@ -14,7 +14,7 @@ import { Absence } from '../../model/absence.interface';
   imports: [CommonModule, CalendarSlotComponent],
 })
 export class CalendarComponent {
-  @Input() doctorId!: number;
+  doctorId: string = '1';
 
   availability: Availability[] = [];
 
@@ -242,5 +242,15 @@ export class CalendarComponent {
     const newDate = new Date(date);
     newDate.setHours(hours, minutes, 0, 0);
     return newDate;
+  }
+
+  maxTimeSlotDuration(timeslot: Date): number {
+    let start = timeslot.getTime();
+    let duration = 0;
+    while (this.timeslots.has(start) && !this.timeslots.get(start)) {
+      duration++;
+      start += 30 * 60 * 1000;
+    }
+    return duration;
   }
 }

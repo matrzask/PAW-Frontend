@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
 export class AddAbsenceComponent {
   constructor(private absenceService: AbsenceService) {}
 
-  @Input() doctorId!: string;
+  doctorId: string = '1';
 
   form = new FormGroup({
     startDate: new FormControl<Date>(new Date(), Validators.required),

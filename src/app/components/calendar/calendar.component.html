@@ -23,7 +23,8 @@
           <td class="timeslot">{{ time }}</td>
         </ng-template>
         <td *ngFor="let day of days">
-          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())" [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)"></app-calendar-slot>
+          <app-calendar-slot *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())"
+          [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)" [maxDuration]="maxTimeSlotDuration(getDateWithTimeslot(day.date, time))"></app-calendar-slot>
         </td>
       </tr>
     </tbody>

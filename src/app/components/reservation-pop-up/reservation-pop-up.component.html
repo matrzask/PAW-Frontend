@@ -1,8 +1,39 @@
 <div class="popup-backdrop" *ngIf="visible">
   <div class="popup">
-    <h2>Reserve Timeslot</h2>
-    <p>Do you want to reserve the timeslot on {{ timeslotDate | date: 'short' }}?</p>
-    <button (click)="onConfirm()">Confirm</button>
-    <button (click)="onClose()">Cancel</button>
+    <div class="top">
+      <button (click)="onClose()" class="close">X</button>
+    </div>
+    <h2>Reserving timeslot on {{ timeslotDate | date: 'short' }}.</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Patient first and last name</label>
+        <input type="text" formControlName="patient" id="name">
+      </div>
+      <div class="form-group">
+        <label>Patient gender</label>
+        <select formControlName="patientGender" id="gender">
+          <option *ngFor="let gender of genderOptions" [value]="gender">{{ gender }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="age">Patient age</label>
+        <input type="number" formControlName="patientAge" id="age" min="0">
+      </div>
+      <div class="form-group">
+        <label for="duration">Visit duration [minutes]</label>
+        <input type="number" formControlName="duration" id="duration" min="30" [max]="maxDuration*30" step="30" value="30" (change)="onDurationChange($event)">
+      </div>
+      <div class="form-group">
+        <label>Consultation type</label>
+        <select formControlName="type" id="type">
+          <option *ngFor="let type of consultationTypeOptions" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="details">Details</label>
+        <textarea formControlName="details" id="details"></textarea>
+      </div>
+      <button type="submit">Confirm</button>
+    </form>
   </div>
 </div>

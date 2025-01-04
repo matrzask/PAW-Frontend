@@ -1,4 +1,5 @@
 import { ConsultationType } from '../enums/consultation-type.enum';
+import { Gender } from '../enums/gender.enum';
 
 export interface Consultation {
   id: string;
@@ -7,7 +8,7 @@ export interface Consultation {
   duration: number; // in timeslots (half an hour each)
   type: ConsultationType;
   patient: string; // patient name and surname
-  patientGender: string;
+  patientGender: Gender;
   patientAge: number;
   details?: string;
 }

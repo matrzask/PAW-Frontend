@@ -12,13 +12,13 @@ import { ReservationPopUpComponent } from '../reservation-pop-up/reservation-pop
 export class CalendarSlotComponent {
   @Input() timeslot!: { date: Date; consultation?: Consultation };
   @Input() cancelled = false;
+  @Input() maxDuration = 1;
 
   showPopup = false;
 
   onReserve(): void {
     if (!this.isFree()) return;
     if (this.timeslot.date) {
-      console.log('Reserving timeslot for', this.timeslot.date);
       this.showPopup = true;
     }
   }
