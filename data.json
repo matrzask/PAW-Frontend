@@ -88,7 +88,14 @@
       ]
     }
   ],
-  "absence": [],
+  "absence": [
+    {
+      "id": "3399",
+      "doctorId": "1",
+      "startDate": "2025-01-05T00:00:00.000Z",
+      "endDate": "2025-01-05T00:00:00.000Z"
+    }
+  ],
   "consultation": [
     {
       "id": "286f",

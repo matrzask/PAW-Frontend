@@ -5,7 +5,7 @@
     </div>
     <h2>Cancel this consultation?</h2>
     <div class="info" *ngIf="consultation">
-      <p>Patient {{ consultation.patient }}, Age {{ consultation.patientAge }}</p>
+      <p>Patient {{ consultation.patient }}, Age {{ consultation.patientAge }}, Gender: {{ consultation.patientGender }}</p>
       <p>Date: {{ consultation.date }}</p>
       <p>Type: {{ consultation.type }}</p>
       <p>Details: {{ consultation.details }}</p>
