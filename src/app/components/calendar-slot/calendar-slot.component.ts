@@ -15,6 +15,9 @@ export class CalendarSlotComponent {
   @Input() maxDuration = 1;
 
   showPopup = false;
+  showTooltip = false;
+  tooltipX = 0;
+  tooltipY = 0;
 
   onReserve(): void {
     if (!this.isFree()) return;
@@ -81,5 +84,11 @@ export class CalendarSlotComponent {
       return 'Expired';
     }
     return 'Available';
+  }
+
+  toggleTooltip(show: boolean, event: MouseEvent) {
+    this.showTooltip = show;
+    this.tooltipX = event.clientX;
+    this.tooltipY = event.clientY;
   }
 }

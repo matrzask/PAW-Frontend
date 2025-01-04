@@ -1,5 +1,9 @@
-<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (click)="onReserve()" *ngIf="!cancelled || isReserved()">
+<div [ngClass]="{free: isFree()}" [style]="{ 'background-color': getColor() }" (click)="onReserve()" *ngIf="!cancelled || isReserved()" (mousemove)="toggleTooltip(true, $event)" (mouseleave)="toggleTooltip(false, $event)">
   {{ getText() }}
+  <div class="tooltip" *ngIf="showTooltip && timeslot.consultation" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+    <p>Patient {{ timeslot.consultation.patient }}, Age {{ timeslot.consultation.patientAge }}</p>
+    <p>Details: {{ timeslot.consultation.details }}</p>
+  </div>
 </div>
 
 <reservation-pop-up [visible]="showPopup" [timeslotDate]="timeslot.date" (confirm)="onConfirmReservation()" (close)="onClosePopup()" [maxDuration]="maxDuration"></reservation-pop-up>
