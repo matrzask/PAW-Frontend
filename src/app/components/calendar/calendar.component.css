@@ -22,7 +22,7 @@
 }
 
 .day {
-  min-width: 80px;
+  width: 80px;
 }
 
 .calendar td {
