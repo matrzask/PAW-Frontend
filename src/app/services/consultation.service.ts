@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Consultation } from '../model/consultation.interface';
 import { map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +11,19 @@ import { Observable, Subject } from 'rxjs';
 export class ConsultationService {
   private consultationChangedSubject = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.configService.subscribeForChange().subscribe(() => {
+      this.consultationChangedSubject.next();
+    });
+  }
 
   readonly path = 'http://localhost:3000/consultation';
 
-  getConsultations(doctorId: string) {
+  getConsultations() {
     return this.http
-      .get<Consultation[]>(`${this.path}?doctorId=${doctorId}`)
+      .get<Consultation[]>(
+        `${this.path}?doctorId=${this.configService.doctorId}`
+      )
       .pipe(
         map((availabilities) =>
           availabilities.map((consultation) => ({
@@ -31,6 +38,7 @@ export class ConsultationService {
     const formattedConsultation = {
       ...consultation,
       date: new Date(consultation.date).toISOString(),
+      doctorId: this.configService.doctorId,
     };
 
     return this.http.post<Consultation>(this.path, formattedConsultation).pipe(

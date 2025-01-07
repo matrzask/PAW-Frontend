@@ -15,8 +15,6 @@ import { ConsultationService } from '../../services/consultation.service';
   imports: [CommonModule, CalendarSlotComponent],
 })
 export class CalendarComponent {
-  doctorId: string = '1';
-
   availability: Availability[] = [];
 
   @ViewChild('currentTimeslot', { static: false })
@@ -85,7 +83,7 @@ export class CalendarComponent {
   }
 
   private getAbsences() {
-    this.absenceService.getAbsences(this.doctorId).subscribe((data) => {
+    this.absenceService.getAbsences().subscribe((data) => {
       this.absences = data;
 
       this.absentDays.clear();
@@ -105,13 +103,11 @@ export class CalendarComponent {
   private fillSlots() {
     this.timeslots.clear();
 
-    this.availabilityService
-      .getAvailability(this.doctorId)
-      .subscribe((data) => {
-        this.availability = data;
-        this.getTimeslots();
-        this.setTimes();
-      });
+    this.availabilityService.getAvailability().subscribe((data) => {
+      this.availability = data;
+      this.getTimeslots();
+      this.setTimes();
+    });
   }
 
   scrollToCurrentTime() {
@@ -217,12 +213,10 @@ export class CalendarComponent {
   }
 
   getConsultations() {
-    this.consultationService
-      .getConsultations(this.doctorId)
-      .subscribe((data) => {
-        this.consultations = data;
-        this.fillSlots();
-      });
+    this.consultationService.getConsultations().subscribe((data) => {
+      this.consultations = data;
+      this.fillSlots();
+    });
   }
 
   isCurrentDay(date: Date): boolean {

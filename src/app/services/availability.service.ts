@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Availability } from '../model/availability.interface';
 import { map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { ConfigService } from './config.service';
+import { doc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +12,19 @@ import { Observable, Subject } from 'rxjs';
 export class AvailabilityService {
   private availabilityChangedSubject = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.configService.subscribeForChange().subscribe(() => {
+      this.availabilityChangedSubject.next();
+    });
+  }
 
   readonly path = 'http://localhost:3000/availability';
 
-  getAvailability(doctorId: string) {
+  getAvailability() {
     return this.http
-      .get<Availability[]>(`${this.path}?doctorId=${doctorId}`)
+      .get<Availability[]>(
+        `${this.path}?doctorId=${this.configService.doctorId}`
+      )
       .pipe(
         map((availabilities) =>
           availabilities.map((availability) => ({
@@ -41,6 +49,7 @@ export class AvailabilityService {
         start: time.start,
         end: time.end,
       })),
+      doctorId: this.configService.doctorId,
     };
 
     return this.http.post<Availability>(this.path, formattedAvailability).pipe(

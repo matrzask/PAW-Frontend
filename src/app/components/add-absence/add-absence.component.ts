@@ -18,8 +18,6 @@ import { CommonModule } from '@angular/common';
 export class AddAbsenceComponent {
   constructor(private absenceService: AbsenceService) {}
 
-  doctorId: string = '1';
-
   form = new FormGroup({
     startDate: new FormControl<Date>(new Date(), Validators.required),
     endDate: new FormControl<Date>(new Date(), Validators.required),
@@ -33,7 +31,6 @@ export class AddAbsenceComponent {
 
   mapFormValues(): Absence {
     return {
-      doctorId: this.doctorId,
       startDate: this.form.value.startDate ?? new Date(),
       endDate: this.form.value.endDate ?? new Date(),
     };

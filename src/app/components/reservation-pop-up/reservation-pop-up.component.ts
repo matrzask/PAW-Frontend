@@ -32,8 +32,6 @@ export class ReservationPopUpComponent {
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<void>();
 
-  doctorId: string = '1';
-
   genderOptions = Object.values(Gender);
   consultationTypeOptions = Object.values(ConsultationType);
 
@@ -77,7 +75,6 @@ export class ReservationPopUpComponent {
 
   mapFormValues(): Consultation {
     return {
-      doctorId: this.doctorId,
       date: this.timeslotDate,
       duration: this.form.controls['duration'].value! / 30,
       type: this.form.controls['type'].value!,

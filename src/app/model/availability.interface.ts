@@ -1,6 +1,6 @@
 export interface Availability {
   id?: string;
-  doctorId: string;
+  doctorId?: string;
   oneTime: boolean;
   startDate: Date;
   endDate?: Date;

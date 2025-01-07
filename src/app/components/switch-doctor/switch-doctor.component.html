@@ -1,0 +1,6 @@
+<div>
+  <label for="doctors">Select a doctor:</label>
+  <select [formControl]="selected" (change)="onChange()">
+    <option *ngFor="let doctor of doctors" [value]="doctor.id">{{doctor.name}}</option>
+  </select>
+</div>

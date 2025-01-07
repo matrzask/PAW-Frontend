@@ -18,8 +18,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AddAvailabilityComponent {
   constructor(private availabilityService: AvailabilityService) {}
-  doctorId: string = '1';
-
   daysOfWeek: string[] = [
     'Monday',
     'Tuesday',
@@ -58,7 +56,6 @@ export class AddAvailabilityComponent {
 
   mapFormValues(): Availability {
     return {
-      doctorId: this.doctorId,
       oneTime: this.form.value.oneTime ?? false,
       startDate: this.form.value.startDate ?? new Date(),
       endDate: this.form.value.endDate,
