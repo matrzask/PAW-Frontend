@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-switch-doctor',
+  selector: 'switch-doctor',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './switch-doctor.component.html',
   styleUrl: './switch-doctor.component.css',

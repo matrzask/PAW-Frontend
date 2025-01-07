@@ -1,0 +1,6 @@
+<div>
+  <label>Select the data souce:</label>
+  <select [formControl]="selected" (change)="onChange()">
+    <option *ngFor="let source of sources" [value]="source">{{source}}</option>
+  </select>
+</div>
