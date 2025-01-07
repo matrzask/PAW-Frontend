@@ -27,6 +27,13 @@ export class SwitchDoctorComponent {
     });
 
     this.selected.setValue(this.configService.doctorId);
+
+    this.doctorService.subscribeForChange().subscribe(() => {
+      this.doctorService.getDoctors().subscribe((doctors) => {
+        this.doctors = doctors;
+        this.selected.setValue(this.configService.doctorId);
+      });
+    });
   }
 
   onChange() {

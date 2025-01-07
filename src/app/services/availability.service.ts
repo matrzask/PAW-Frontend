@@ -1,10 +1,18 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Availability } from '../model/availability.interface';
 import { map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { ConfigService } from './config.service';
-import { doc } from '@angular/fire/firestore';
+import {
+  addDoc,
+  collection,
+  collectionData,
+  Firestore,
+  query,
+  where,
+} from '@angular/fire/firestore';
+import { DataSource } from '../enums/data-source.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -12,39 +20,64 @@ import { doc } from '@angular/fire/firestore';
 export class AvailabilityService {
   private availabilityChangedSubject = new Subject<void>();
 
+  private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
       this.availabilityChangedSubject.next();
     });
   }
 
-  readonly path = 'http://localhost:3000/availability';
+  readonly jsonServerPath = 'http://localhost:3000/availability';
 
   getAvailability() {
-    return this.http
-      .get<Availability[]>(
-        `${this.path}?doctorId=${this.configService.doctorId}`
-      )
-      .pipe(
-        map((availabilities) =>
+    if (this.configService.source === DataSource.JSON_SERVER) {
+      return this.http
+        .get<Availability[]>(
+          `${this.jsonServerPath}?doctorId=${this.configService.doctorId}`
+        )
+        .pipe(
+          map((availabilities) =>
+            availabilities.map((availability) => ({
+              ...availability,
+              startDate: new Date(availability.startDate),
+              endDate: availability.endDate
+                ? new Date(availability.endDate)
+                : undefined,
+            }))
+          )
+        );
+    } else if (this.configService.source === DataSource.FIREBASE) {
+      const availabilitiesCollection = collection(
+        this.firestore,
+        'availability'
+      );
+      const availabilitiesQuery = query(
+        availabilitiesCollection,
+        where('doctorId', '==', this.configService.doctorId)
+      );
+      return collectionData(availabilitiesQuery, { idField: 'id' }).pipe(
+        map((availabilities: any[]) =>
           availabilities.map((availability) => ({
             ...availability,
-            startDate: new Date(availability.startDate),
+            startDate: availability.startDate.toDate(),
             endDate: availability.endDate
-              ? new Date(availability.endDate)
+              ? availability.endDate.toDate()
               : undefined,
           }))
         )
       );
+    } else {
+      throw new Error('Data source not supported');
+    }
   }
 
   addAvailability(availability: Availability) {
     const formattedAvailability = {
       ...availability,
-      startDate: new Date(availability.startDate).toISOString(),
+      startDate: new Date(availability.startDate),
       endDate: availability.endDate
-        ? new Date(availability.endDate).toISOString()
-        : undefined,
+        ? new Date(availability.endDate)
+        : new Date(availability.startDate),
       times: availability.times.map((time) => ({
         start: time.start,
         end: time.end,
@@ -52,11 +85,27 @@ export class AvailabilityService {
       doctorId: this.configService.doctorId,
     };
 
-    return this.http.post<Availability>(this.path, formattedAvailability).pipe(
-      map(() => {
-        this.availabilityChangedSubject.next();
-      })
-    );
+    if (this.configService.source === DataSource.JSON_SERVER) {
+      return this.http
+        .post<Availability>(this.jsonServerPath, formattedAvailability)
+        .pipe(
+          map(() => {
+            this.availabilityChangedSubject.next();
+          })
+        );
+    } else if (this.configService.source === DataSource.FIREBASE) {
+      const availabilitiesCollection = collection(
+        this.firestore,
+        'availability'
+      );
+      return from(addDoc(availabilitiesCollection, formattedAvailability)).pipe(
+        map(() => {
+          this.availabilityChangedSubject.next();
+        })
+      );
+    } else {
+      throw new Error('Data source not supported');
+    }
   }
 
   subscribeForChange(): Observable<void> {

@@ -106,6 +106,47 @@
         }
       ],
       "doctorId": "2"
+    },
+    {
+      "id": "446d",
+      "oneTime": true,
+      "startDate": "2025-01-12T00:00:00.000Z",
+      "daysOfWeek": [],
+      "times": [
+        {
+          "start": "09:00",
+          "end": "12:00"
+        }
+      ],
+      "doctorId": "1"
+    },
+    {
+      "id": "055e",
+      "oneTime": true,
+      "startDate": "2025-01-10",
+      "endDate": "2025-01-10T00:00:00.000Z",
+      "daysOfWeek": [],
+      "times": [
+        {
+          "start": "04:30",
+          "end": "07:00"
+        }
+      ],
+      "doctorId": "1"
+    },
+    {
+      "id": "f120",
+      "oneTime": true,
+      "startDate": "2025-01-12T00:00:00.000Z",
+      "endDate": "2025-01-12T00:00:00.000Z",
+      "daysOfWeek": [],
+      "times": [
+        {
+          "start": "08:00",
+          "end": "16:00"
+        }
+      ],
+      "doctorId": "1"
     }
   ],
   "absence": [
@@ -160,18 +201,29 @@
       "patientGender": "Other",
       "patientAge": 55,
       "details": ""
+    },
+    {
+      "id": "89b3",
+      "date": "2025-01-09T07:00:00.000Z",
+      "duration": 3,
+      "type": "Follow-up",
+      "patient": "Maciej Trzaskacz",
+      "patientGender": "Male",
+      "patientAge": 7,
+      "details": "Test",
+      "doctorId": "1"
     }
   ],
   "doctor": [
     {
       "id": "1",
       "name": "Dr. Jan Kowalski",
-      "specialty": "Cardiologist"
+      "speciality": "Cardiologist"
     },
     {
       "id": "2",
       "name": "Dr. Anna Nowak",
-      "specialty": "Dermatologist"
+      "speciality": "Dermatologist"
     }
   ]
 }

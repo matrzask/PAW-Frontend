@@ -85,8 +85,8 @@ export class AddAvailabilityComponent {
   addTime() {
     this.timesFormArray.push(
       new FormGroup({
-        start: new FormControl('', Validators.required),
-        end: new FormControl('', Validators.required),
+        start: new FormControl('08:00', Validators.required),
+        end: new FormControl('16:00', Validators.required),
       })
     );
   }
@@ -99,5 +99,6 @@ export class AddAvailabilityComponent {
     this.addAvailability();
     this.formVisible = false;
     this.form.reset();
+    this.timesFormArray.clear();
   }
 }
