@@ -18,24 +18,27 @@ export class DoctorService {
   private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
+      this.updateDoctorId();
       this.doctorsChangedSubject.next();
     });
+    this.updateDoctorId();
   }
 
   private doctorsChangedSubject = new Subject<void>();
 
   readonly path = 'http://localhost:3000/doctor';
 
+  private updateDoctorId() {
+    this.getDoctors().subscribe((doctors) => {
+      if (doctors.length > 0 && this.configService.doctorId !== doctors[0].id) {
+        this.configService.doctorId = doctors[0].id;
+      }
+    });
+  }
+
   getDoctors() {
     if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor[]>(this.path).pipe(
-        map((doctors) => {
-          if (this.configService.doctorId === '' && doctors.length > 0) {
-            this.configService.doctorId = doctors[0].id ?? '';
-          }
-          return doctors;
-        })
-      );
+      return this.http.get<Doctor[]>(this.path);
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorsCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorsCollection, { idField: 'id' }).pipe(

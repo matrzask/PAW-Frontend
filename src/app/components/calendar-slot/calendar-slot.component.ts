@@ -26,7 +26,7 @@ export class CalendarSlotComponent {
   tooltipY = 0;
 
   onClick(): void {
-    if (this.isReserved()) {
+    if (this.isReserved() && !this.isExpired()) {
       this.showCancelPopup = true;
     }
     if (!this.isFree()) return;
