@@ -32,7 +32,7 @@ export class ConsultationService {
   readonly path = 'http://localhost:3000/consultation';
 
   getConsultations() {
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http
         .get<Consultation[]>(
           `${this.path}?doctorId=${this.configService.doctorId}`
@@ -74,7 +74,7 @@ export class ConsultationService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http
         .post<Consultation>(this.path, formattedConsultation)
         .pipe(
@@ -98,7 +98,7 @@ export class ConsultationService {
   }
 
   deleteConsultation(consultationId: string) {
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http.delete(`${this.path}/${consultationId}`).pipe(
         map(() => {
           this.consultationChangedSubject.next();

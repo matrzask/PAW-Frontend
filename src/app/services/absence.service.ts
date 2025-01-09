@@ -30,7 +30,7 @@ export class AbsenceService {
   readonly path = 'http://localhost:3000/absence';
 
   getAbsences() {
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http
         .get<Absence[]>(`${this.path}?doctorId=${this.configService.doctorId}`)
         .pipe(
@@ -72,7 +72,7 @@ export class AbsenceService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http.post<Absence>(this.path, formattedAbsence).pipe(
         map(() => {
           this.absenceChangedSubject.next();

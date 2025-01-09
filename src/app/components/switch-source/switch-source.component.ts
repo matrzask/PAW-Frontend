@@ -15,7 +15,7 @@ export class SwitchSourceComponent {
 
   sources: DataSource[] = Object.values(DataSource);
   selected: FormControl<DataSource | null> = new FormControl<DataSource | null>(
-    DataSource.JSON_SERVER
+    DataSource.SERVER
   );
 
   ngOnInit() {

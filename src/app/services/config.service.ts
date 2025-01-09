@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 export class ConfigService {
   private configChangedSubject = new Subject<void>();
 
-  private _source: DataSource = DataSource.JSON_SERVER;
+  private _source: DataSource = DataSource.SERVER;
   public get source(): DataSource {
     return this._source;
   }
@@ -17,7 +17,7 @@ export class ConfigService {
     this.configChangedSubject.next();
   }
 
-  private _doctorId: string = '1';
+  private _doctorId: string = '';
   public get doctorId(): string {
     return this._doctorId;
   }

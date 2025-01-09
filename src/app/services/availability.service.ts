@@ -30,7 +30,7 @@ export class AvailabilityService {
   readonly jsonServerPath = 'http://localhost:3000/availability';
 
   getAvailability() {
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http
         .get<Availability[]>(
           `${this.jsonServerPath}?doctorId=${this.configService.doctorId}`
@@ -85,7 +85,7 @@ export class AvailabilityService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.JSON_SERVER) {
+    if (this.configService.source === DataSource.SERVER) {
       return this.http
         .post<Availability>(this.jsonServerPath, formattedAvailability)
         .pipe(

@@ -1,4 +1,4 @@
 export enum DataSource {
-  JSON_SERVER = 'JSON Server',
+  SERVER = 'Local Server',
   FIREBASE = 'Firebase',
 }
