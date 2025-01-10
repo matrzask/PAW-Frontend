@@ -57,13 +57,13 @@ export class CalendarComponent {
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
     this.getConsultations();
-    this.consultationService.subscribeForChange().subscribe(() => {
-      this.getConsultations();
+    this.consultationService.subscribeForChange().subscribe((consultations) => {
+      this.setConsultations(consultations);
     });
 
     this.getAbsences();
-    this.absenceService.subscribeForChange().subscribe(() => {
-      this.getAbsences();
+    this.absenceService.subscribeForChange().subscribe((absences) => {
+      this.setAbsences(absences);
     });
 
     this.getAvailability();
@@ -85,21 +85,25 @@ export class CalendarComponent {
     this.fillSlots();
   }
 
+  private setAbsences(absences: Absence[] = this.absences) {
+    this.absences = absences;
+
+    this.absentDays.clear();
+    for (let absence of this.absences) {
+      let startDate = new Date(absence.startDate);
+      startDate.setHours(0, 0, 0, 0);
+      let endDate = absence.endDate ? new Date(absence.endDate) : startDate;
+      endDate.setHours(0, 0, 0, 0);
+      while (startDate <= endDate) {
+        this.absentDays.add(startDate.getTime());
+        startDate.setDate(startDate.getDate() + 1);
+      }
+    }
+  }
+
   private getAbsences() {
     this.absenceService.getAbsences().subscribe((data) => {
-      this.absences = data;
-
-      this.absentDays.clear();
-      for (let absence of this.absences) {
-        let startDate = new Date(absence.startDate);
-        startDate.setHours(0, 0, 0, 0);
-        let endDate = absence.endDate ? new Date(absence.endDate) : startDate;
-        endDate.setHours(0, 0, 0, 0);
-        while (startDate <= endDate) {
-          this.absentDays.add(startDate.getTime());
-          startDate.setDate(startDate.getDate() + 1);
-        }
-      }
+      this.setAbsences(data);
     });
   }
 
@@ -220,10 +224,14 @@ export class CalendarComponent {
     }
   }
 
+  setConsultations(consultations: Consultation[] = this.consultations) {
+    this.consultations = consultations;
+    this.fillSlots();
+  }
+
   getConsultations() {
     this.consultationService.getConsultations().subscribe((data) => {
-      this.consultations = data;
-      this.fillSlots();
+      this.setConsultations(data);
     });
   }
 

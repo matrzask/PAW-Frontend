@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from './config.service';
 import { inject, Injectable } from '@angular/core';
 import { Doctor } from '../model/doctor.interface';
-import { from, map, Subject } from 'rxjs';
+import { from, map, Observable, Subject } from 'rxjs';
 import { DataSource } from '../enums/data-source.enum';
 import {
   addDoc,
@@ -18,25 +18,29 @@ export class DoctorService {
   private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
-      this.updateDoctorId();
-      this.doctorsChangedSubject.next();
+      this.getDoctors().subscribe((doctors) => {
+        this.updateDoctorId(doctors);
+        this.doctorsChangedSubject.next(doctors);
+      });
     });
-    this.updateDoctorId();
+    this.getDoctors().subscribe((doctors) => {
+      this.updateDoctorId(doctors);
+    });
   }
 
-  private doctorsChangedSubject = new Subject<void>();
+  private doctorsChangedSubject = new Subject<Doctor[]>();
 
   readonly path = 'http://localhost:3000/doctor';
 
-  private updateDoctorId() {
-    this.getDoctors().subscribe((doctors) => {
-      if (
-        doctors.length > 0 &&
-        !doctors.some((doctor) => doctor.id === this.configService.doctorId)
-      ) {
+  private updateDoctorId(doctors: Doctor[]) {
+    if (
+      doctors.length > 0 &&
+      !doctors.some((doctor) => doctor.id === this.configService.doctorId)
+    ) {
+      if (doctors[0].id) {
         this.configService.doctorId = doctors[0].id;
       }
-    });
+    }
   }
 
   getDoctors() {
@@ -76,14 +80,18 @@ export class DoctorService {
     if (this.configService.source === DataSource.SERVER) {
       return this.http.post<Doctor>(this.path, doctor).pipe(
         map(() => {
-          this.doctorsChangedSubject.next();
+          this.getDoctors().subscribe((doctors) => {
+            this.doctorsChangedSubject.next(doctors);
+          });
         })
       );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorsCollection = collection(this.firestore, 'doctor');
       return from(addDoc(doctorsCollection, doctor)).pipe(
         map(() => {
-          this.doctorsChangedSubject.next();
+          this.getDoctors().subscribe((doctors) => {
+            this.doctorsChangedSubject.next(doctors);
+          });
         })
       );
     } else {
@@ -91,7 +99,7 @@ export class DoctorService {
     }
   }
 
-  subscribeForChange() {
+  subscribeForChange(): Observable<Doctor[]> {
     return this.doctorsChangedSubject;
   }
 }

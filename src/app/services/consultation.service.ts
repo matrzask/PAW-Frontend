@@ -20,12 +20,14 @@ import {
   providedIn: 'root',
 })
 export class ConsultationService {
-  private consultationChangedSubject = new Subject<void>();
+  private consultationChangedSubject = new Subject<Consultation[]>();
 
   private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
-      this.consultationChangedSubject.next();
+      this.getConsultations().subscribe((consultations) => {
+        this.consultationChangedSubject.next(consultations);
+      });
     });
   }
 
@@ -79,7 +81,9 @@ export class ConsultationService {
         .post<Consultation>(this.path, formattedConsultation)
         .pipe(
           map(() => {
-            this.consultationChangedSubject.next();
+            this.getConsultations().subscribe((consultations) => {
+              this.consultationChangedSubject.next(consultations);
+            });
           })
         );
     } else if (this.configService.source === DataSource.FIREBASE) {
@@ -89,7 +93,9 @@ export class ConsultationService {
       );
       return from(addDoc(consultationsCollection, formattedConsultation)).pipe(
         map(() => {
-          this.consultationChangedSubject.next();
+          this.getConsultations().subscribe((consultations) => {
+            this.consultationChangedSubject.next(consultations);
+          });
         })
       );
     } else {
@@ -101,7 +107,9 @@ export class ConsultationService {
     if (this.configService.source === DataSource.SERVER) {
       return this.http.delete(`${this.path}/${consultationId}`).pipe(
         map(() => {
-          this.consultationChangedSubject.next();
+          this.getConsultations().subscribe((consultations) => {
+            this.consultationChangedSubject.next(consultations);
+          });
         })
       );
     } else if (this.configService.source === DataSource.FIREBASE) {
@@ -111,7 +119,9 @@ export class ConsultationService {
       );
       return from(deleteDoc(consultationDocRef)).pipe(
         map(() => {
-          this.consultationChangedSubject.next();
+          this.getConsultations().subscribe((consultations) => {
+            this.consultationChangedSubject.next(consultations);
+          });
         })
       );
     } else {
@@ -119,7 +129,7 @@ export class ConsultationService {
     }
   }
 
-  subscribeForChange(): Observable<void> {
+  subscribeForChange(): Observable<Consultation[]> {
     return this.consultationChangedSubject.asObservable();
   }
 }

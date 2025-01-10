@@ -18,12 +18,14 @@ import { DataSource } from '../enums/data-source.enum';
   providedIn: 'root',
 })
 export class AbsenceService {
-  private absenceChangedSubject = new Subject<void>();
+  private absenceChangedSubject = new Subject<Absence[]>();
 
   private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
-      this.absenceChangedSubject.next();
+      this.getAbsences().subscribe((absences) =>
+        this.absenceChangedSubject.next(absences)
+      );
     });
   }
 
@@ -75,14 +77,18 @@ export class AbsenceService {
     if (this.configService.source === DataSource.SERVER) {
       return this.http.post<Absence>(this.path, formattedAbsence).pipe(
         map(() => {
-          this.absenceChangedSubject.next();
+          this.getAbsences().subscribe((absences) =>
+            this.absenceChangedSubject.next(absences)
+          );
         })
       );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const absencesCollection = collection(this.firestore, 'absence');
       return from(addDoc(absencesCollection, formattedAbsence)).pipe(
         map(() => {
-          this.absenceChangedSubject.next();
+          this.getAbsences().subscribe((absences) =>
+            this.absenceChangedSubject.next(absences)
+          );
         })
       );
     } else {
@@ -90,7 +96,7 @@ export class AbsenceService {
     }
   }
 
-  subscribeForChange(): Observable<void> {
+  subscribeForChange(): Observable<Absence[]> {
     return this.absenceChangedSubject.asObservable();
   }
 }
