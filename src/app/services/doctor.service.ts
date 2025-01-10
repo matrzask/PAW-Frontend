@@ -30,7 +30,10 @@ export class DoctorService {
 
   private updateDoctorId() {
     this.getDoctors().subscribe((doctors) => {
-      if (doctors.length > 0 && this.configService.doctorId !== doctors[0].id) {
+      if (
+        doctors.length > 0 &&
+        !doctors.some((doctor) => doctor.id === this.configService.doctorId)
+      ) {
         this.configService.doctorId = doctors[0].id;
       }
     });
