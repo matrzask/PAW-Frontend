@@ -102,6 +102,7 @@ export class CalendarComponent {
 
   private fillSlots() {
     this.timeslots.clear();
+    this.skipTimeslot.clear();
 
     this.availabilityService.getAvailability().subscribe((data) => {
       this.availability = data;
