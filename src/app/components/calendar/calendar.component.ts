@@ -66,9 +66,12 @@ export class CalendarComponent {
       this.getAbsences();
     });
 
-    this.availabilityService.subscribeForChange().subscribe(() => {
-      this.fillSlots();
-    });
+    this.getAvailability();
+    this.availabilityService
+      .subscribeForChange()
+      .subscribe((availabilities) => {
+        this.fillSlots(availabilities);
+      });
   }
 
   changeWeek(weeks: number) {
@@ -100,14 +103,18 @@ export class CalendarComponent {
     });
   }
 
-  private fillSlots() {
+  private fillSlots(availabilities: Availability[] = this.availability) {
+    this.availability = availabilities;
     this.timeslots.clear();
     this.skipTimeslot.clear();
 
+    this.getTimeslots();
+    this.setTimes();
+  }
+
+  private getAvailability() {
     this.availabilityService.getAvailability().subscribe((data) => {
-      this.availability = data;
-      this.getTimeslots();
-      this.setTimes();
+      this.fillSlots(data);
     });
   }
 

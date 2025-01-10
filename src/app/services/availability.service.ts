@@ -18,12 +18,14 @@ import { DataSource } from '../enums/data-source.enum';
   providedIn: 'root',
 })
 export class AvailabilityService {
-  private availabilityChangedSubject = new Subject<void>();
+  private availabilityChangedSubject = new Subject<Availability[]>();
 
   private firestore = inject(Firestore);
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.subscribeForChange().subscribe(() => {
-      this.availabilityChangedSubject.next();
+      this.getAvailability().subscribe((availabilities) =>
+        this.availabilityChangedSubject.next(availabilities)
+      );
     });
   }
 
@@ -90,7 +92,9 @@ export class AvailabilityService {
         .post<Availability>(this.path, formattedAvailability)
         .pipe(
           map(() => {
-            this.availabilityChangedSubject.next();
+            this.getAvailability().subscribe((availabilities) =>
+              this.availabilityChangedSubject.next(availabilities)
+            );
           })
         );
     } else if (this.configService.source === DataSource.FIREBASE) {
@@ -100,7 +104,9 @@ export class AvailabilityService {
       );
       return from(addDoc(availabilitiesCollection, formattedAvailability)).pipe(
         map(() => {
-          this.availabilityChangedSubject.next();
+          this.getAvailability().subscribe((availabilities) =>
+            this.availabilityChangedSubject.next(availabilities)
+          );
         })
       );
     } else {
@@ -108,7 +114,7 @@ export class AvailabilityService {
     }
   }
 
-  subscribeForChange(): Observable<void> {
+  subscribeForChange(): Observable<Availability[]> {
     return this.availabilityChangedSubject.asObservable();
   }
 }
