@@ -55,14 +55,14 @@ export class ReservationPopUpComponent {
       Validators.minLength(3),
     ]),
     patientGender: new FormControl<Gender>(Gender.Male, Validators.required),
-    patientAge: new FormControl<number>(0, Validators.required),
+    patientAge: new FormControl<number>(18, Validators.required),
     details: new FormControl<string>(''),
   });
 
   user?: User;
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
     if (this.user) {
       this.form.controls['patient'].setValue(this.user.name);
       this.form.controls['patientGender'].setValue(this.user.gender);

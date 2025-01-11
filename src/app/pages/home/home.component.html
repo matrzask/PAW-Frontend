@@ -1,7 +1,8 @@
 <div class="options">
   <switch-source></switch-source>
   <switch-doctor *ngIf="user?.role != 'Doctor'"></switch-doctor>
-  <log-out></log-out>
+  <log-out *ngIf="user"></log-out>
+  <login-buttons *ngIf="!user"></login-buttons>
 </div>
 <div class="container">
   <app-calendar></app-calendar>

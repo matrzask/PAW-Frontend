@@ -217,13 +217,11 @@
   "doctor": [
     {
       "id": "1",
-      "name": "Dr. Jan Kowalski",
-      "speciality": "Cardiologist"
+      "name": "Dr. Jan Kowalski"
     },
     {
       "id": "2",
-      "name": "Dr. Anna Nowak",
-      "speciality": "Dermatologist"
+      "name": "Dr. Anna Nowak"
     }
   ]
 }

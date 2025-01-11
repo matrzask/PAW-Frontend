@@ -8,6 +8,7 @@ import { LogOutComponent } from '../../components/log-out/log-out.component';
 import { CommonModule } from '@angular/common';
 import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
+import { LoginButtonsComponent } from '../../components/login-buttons/login-buttons.component';
 
 @Component({
   selector: 'app-home',
@@ -21,13 +22,14 @@ import { AuthService } from '../../services/auth.service';
     SwitchSourceComponent,
     LogOutComponent,
     SwitchDoctorComponent,
+    LoginButtonsComponent,
   ],
 })
 export class HomeComponent {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
   }
 
   user?: User;

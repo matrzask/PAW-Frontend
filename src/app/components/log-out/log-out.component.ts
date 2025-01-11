@@ -16,7 +16,7 @@ export class LogOutComponent {
   user?: User;
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
   }
 
   logOut() {
