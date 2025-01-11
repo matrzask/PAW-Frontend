@@ -16,6 +16,8 @@ import { ConsultationType } from '../../enums/consultation-type.enum';
 import { Gender } from '../../enums/gender.enum';
 import { ConsultationService } from '../../services/consultation.service';
 import { Consultation } from '../../model/consultation.interface';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../model/user.interface';
 
 @Component({
   selector: 'reservation-pop-up',
@@ -24,7 +26,10 @@ import { Consultation } from '../../model/consultation.interface';
   imports: [CommonModule, DatePipe, ReactiveFormsModule],
 })
 export class ReservationPopUpComponent {
-  constructor(private consultationService: ConsultationService) {}
+  constructor(
+    private consultationService: ConsultationService,
+    private authService: AuthService
+  ) {}
 
   @Input() visible = false;
   @Input() timeslotDate!: Date;
@@ -53,6 +58,17 @@ export class ReservationPopUpComponent {
     patientAge: new FormControl<number>(0, Validators.required),
     details: new FormControl<string>(''),
   });
+
+  user?: User;
+
+  ngOnInit() {
+    this.user = this.authService.currentUserValue.user;
+    if (this.user) {
+      this.form.controls['patient'].setValue(this.user.name);
+      this.form.controls['patientGender'].setValue(this.user.gender);
+      this.form.controls['patientAge'].setValue(this.user.age);
+    }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['maxDuration']) {

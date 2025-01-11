@@ -44,7 +44,7 @@ textarea {
   display: flex;
 }
 
-button {
+.close {
   background-color: #007bff;
   border: none;
   color: white;
@@ -53,6 +53,23 @@ button {
   padding: 5px 10px;
 }
 
+.confirm {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 button:hover {
   background-color: #0056b3;
+}
+
+.field {
+  padding: 5px;
+}
+
+input, select {
+  text-align: center;
 }

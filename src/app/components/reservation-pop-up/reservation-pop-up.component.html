@@ -7,25 +7,25 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="name">Patient first and last name</label>
-        <input type="text" formControlName="patient" id="name">
+        <input type="text" formControlName="patient" id="name" class="field">
       </div>
       <div class="form-group">
         <label>Patient gender</label>
-        <select formControlName="patientGender" id="gender">
+        <select formControlName="patientGender" id="gender" class="field">
           <option *ngFor="let gender of genderOptions" [value]="gender">{{ gender }}</option>
         </select>
       </div>
       <div class="form-group">
         <label for="age">Patient age</label>
-        <input type="number" formControlName="patientAge" id="age" min="0">
+        <input type="number" formControlName="patientAge" id="age" min="0" class="field">
       </div>
       <div class="form-group">
         <label for="duration">Visit duration [minutes]</label>
-        <input type="number" formControlName="duration" id="duration" min="30" [max]="maxDuration*30" step="30" value="30" (change)="onDurationChange($event)">
+        <input type="number" formControlName="duration" id="duration" min="30" [max]="maxDuration*30" step="30" value="30" (change)="onDurationChange($event)" class="field">
       </div>
       <div class="form-group">
         <label>Consultation type</label>
-        <select formControlName="type" id="type">
+        <select formControlName="type" id="type" class="field">
           <option *ngFor="let type of consultationTypeOptions" [value]="type">{{ type }}</option>
         </select>
       </div>
@@ -33,7 +33,7 @@
         <label for="details">Details</label>
         <textarea formControlName="details" id="details"></textarea>
       </div>
-      <button type="submit">Confirm</button>
+      <button type="submit" class="confirm">Confirm</button>
     </form>
   </div>
 </div>
