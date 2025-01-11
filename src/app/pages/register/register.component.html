@@ -4,7 +4,7 @@
     <p *ngIf="error" class="error">{{ error }}</p>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <input type="email" class="field" id="email" formControlName="email" placeholder="Email">
-      <input type="password" class="field" id="password" formControlName="password" placeholder="Password">
+      <input type="password" class="field" id="password" formControlName="password" placeholder="Password (min 6 characters)">
       <hr>
       <input type="text" class="field" id="name" formControlName="name" placeholder="First and Last Name">
       <input type="number" class="field" id="age" formControlName="age" placeholder="Age">
@@ -22,5 +22,6 @@
       </div>
       <button type="submit" class="btn">Register</button>
     </form>
+    <p>Already have an account? <a routerLink="/login">Log in!</a></p>
   </div>
 </div>

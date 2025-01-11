@@ -13,6 +13,10 @@ body {
   background-color: #0056b3;
 }
 
+.error {
+  color: red;
+}
+
 .form-container {
   display: flex;
   justify-content: center;
