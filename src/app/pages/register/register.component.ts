@@ -20,8 +20,14 @@ export class RegisterComponent {
   genderOptions = Object.values(Gender);
 
   registerForm = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
+    username: new FormControl('', [
+      Validators.required,
+      Validators.minLength(4),
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+    ]),
     email: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
     age: new FormControl('', Validators.required),
