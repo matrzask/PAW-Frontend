@@ -1,34 +1,36 @@
-<div class="buttons">
-  <button (click)="changeWeek(-1)" class="changeWeek">Previous week</button>
-  <button (click)="changeWeek(1)" class="changeWeek">Next week</button>
-</div>
-<div class="calendar-container">
-  <table class="calendar">
-    <thead>
-      <tr>
-        <th>Start<br>time</th>
-        <th *ngFor="let day of days" class="day">
-          <div [ngClass]="{currentDay: isCurrentDay(day.date), absence: isAbsent(day.date)}">{{ day.dayOfWeek }}</div>
-          <div class="date">{{ day.date | date: 'dd-MM' }}</div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let time of times">
-        <td class="timeslot" [ngClass]="{currentTimeslot: isCurrentTimeslot(time)}"
-            *ngIf="isCurrentTimeslot(time); else notCurrent" #currentTimeslot>
-            {{ time }}
-        </td>
-        <ng-template #notCurrent>
-          <td class="timeslot">{{ time }}</td>
-        </ng-template>
-        <ng-container *ngFor="let day of days">
-          <td [attr.rowspan]="timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration" *ngIf="!skipTimeslot.get(getDateWithTimeslot(day.date, time).getTime())" [ngStyle]="{height: (timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration ?? 1) * 40 + 'px'}">
-            <app-calendar-slot class="slot" *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())"
-            [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)" [maxDuration]="maxTimeSlotDuration(getDateWithTimeslot(day.date, time))"></app-calendar-slot>
+<div class="container">
+  <div class="buttons">
+    <button (click)="changeWeek(-1)" class="changeWeek">Previous week</button>
+    <button (click)="changeWeek(1)" class="changeWeek">Next week</button>
+  </div>
+  <div class="calendar-container">
+    <table class="calendar">
+      <thead>
+        <tr>
+          <th>Start<br>time</th>
+          <th *ngFor="let day of days" class="day">
+            <div [ngClass]="{currentDay: isCurrentDay(day.date), absence: isAbsent(day.date)}">{{ day.dayOfWeek }}</div>
+            <div class="date">{{ day.date | date: 'dd-MM' }}</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let time of times">
+          <td class="timeslot" [ngClass]="{currentTimeslot: isCurrentTimeslot(time)}"
+              *ngIf="isCurrentTimeslot(time); else notCurrent" #currentTimeslot>
+              {{ time }}
           </td>
-        </ng-container>
-      </tr>
-    </tbody>
-  </table>
+          <ng-template #notCurrent>
+            <td class="timeslot">{{ time }}</td>
+          </ng-template>
+          <ng-container *ngFor="let day of days">
+            <td [attr.rowspan]="timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration" *ngIf="!skipTimeslot.get(getDateWithTimeslot(day.date, time).getTime())" [ngStyle]="{height: (timeslots.get(getDateWithTimeslot(day.date, time).getTime())?.duration ?? 1) * 40 + 'px'}">
+              <app-calendar-slot class="slot" *ngIf="timeslots.has(getDateWithTimeslot(day.date, time).getTime())"
+              [timeslot]="{date:getDateWithTimeslot(day.date, time), consultation: timeslots.get(getDateWithTimeslot(day.date, time).getTime())}" [cancelled]="isAbsent(day.date)" [maxDuration]="maxTimeSlotDuration(getDateWithTimeslot(day.date, time))"></app-calendar-slot>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

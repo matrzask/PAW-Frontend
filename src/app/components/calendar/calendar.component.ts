@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CalendarSlotComponent } from '../calendar-slot/calendar-slot.component';
 import { Consultation } from '../../model/consultation.interface';
 import { Availability } from '../../model/availability.interface';
@@ -56,6 +56,7 @@ export class CalendarComponent {
       date.setHours(0, 0, 0, 0);
       this.days.push({ date, dayOfWeek: this.daysOfWeek[i] });
     }
+
     this.getConsultations();
     this.consultationService.subscribeForChange().subscribe((consultations) => {
       this.setConsultations(consultations);
