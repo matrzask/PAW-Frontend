@@ -4,6 +4,7 @@ import { AddAvailabilityComponent } from '../../components/add-availability/add-
 import { AddAbsenceComponent } from '../../components/add-absence/add-absence.component';
 import { SwitchDoctorComponent } from '../../components/switch-doctor/switch-doctor.component';
 import { SwitchSourceComponent } from '../../components/switch-source/switch-source.component';
+import { LogOutComponent } from '../../components/log-out/log-out.component';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,7 @@ import { SwitchSourceComponent } from '../../components/switch-source/switch-sou
     AddAbsenceComponent,
     SwitchDoctorComponent,
     SwitchSourceComponent,
+    LogOutComponent,
   ],
 })
 export class HomeComponent {}
