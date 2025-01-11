@@ -3,7 +3,7 @@
     <h1>Log in</h1>
     <p *ngIf="error" class="error">{{ error }}</p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <input type="text" class="field" id="username" formControlName="username" placeholder="Username">
+      <input type="email" class="field" id="email" formControlName="email" placeholder="Email">
       <input type="password" class="field" id="password" formControlName="password" placeholder="Password">
       <button type="submit" class="btn">Log in</button>
     </form>

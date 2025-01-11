@@ -3,10 +3,9 @@
     <h1>Register new user</h1>
     <p *ngIf="error" class="error">{{ error }}</p>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-      <input type="text" class="field" id="username" formControlName="username" placeholder="Username">
+      <input type="email" class="field" id="email" formControlName="email" placeholder="Email">
       <input type="password" class="field" id="password" formControlName="password" placeholder="Password">
       <hr>
-      <input type="email" class="field" id="email" formControlName="email" placeholder="Email">
       <input type="text" class="field" id="name" formControlName="name" placeholder="First and Last Name">
       <input type="number" class="field" id="age" formControlName="age" placeholder="Age">
       <div class="group">
