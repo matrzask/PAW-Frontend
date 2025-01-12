@@ -21,7 +21,6 @@ import { Router, RouterModule } from '@angular/router';
 export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-  roles = Object.values(UserRole);
   genderOptions = Object.values(Gender);
 
   registerForm = new FormGroup({
@@ -33,7 +32,6 @@ export class RegisterComponent {
     name: new FormControl('', Validators.required),
     age: new FormControl<number>(18, Validators.required),
     gender: new FormControl<Gender>(Gender.Male, Validators.required),
-    role: new FormControl<UserRole>(UserRole.Patient, Validators.required),
   });
 
   error: string | null = null;
@@ -44,7 +42,7 @@ export class RegisterComponent {
       name: this.registerForm.value.name ?? '',
       age: this.registerForm.value.age ?? 0,
       gender: this.registerForm.value.gender ?? Gender.PreferNotToSay,
-      role: this.registerForm.value.role ?? UserRole.Patient,
+      role: UserRole.Patient,
     };
   }
 
