@@ -4,7 +4,7 @@
   <log-out *ngIf="user"></log-out>
   <login-buttons *ngIf="!user"></login-buttons>
 </div>
-<div class="container">
+<div class="container" *ngIf="user">
   <app-calendar></app-calendar>
   <div class="buttons" *ngIf="user?.role == 'Doctor'">
     <add-availability></add-availability>
