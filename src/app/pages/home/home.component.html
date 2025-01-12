@@ -6,7 +6,7 @@
 </div>
 <div class="container">
   <app-calendar></app-calendar>
-  <div class="buttons">
+  <div class="buttons" *ngIf="user?.role == 'Doctor'">
     <add-availability></add-availability>
     <add-absence></add-absence>
   </div>
