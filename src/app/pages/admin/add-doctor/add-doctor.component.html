@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="form-container">
+    <h1>Add new doctor</h1>
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <input type="email" class="field" id="email" formControlName="email" placeholder="Email">
+      <input type="password" class="field" id="password" formControlName="password" placeholder="Password (min 6 characters)">
+      <hr>
+      <input type="text" class="field" id="name" formControlName="name" placeholder="First and Last Name">
+      <div class="group">
+        <label>Age</label>
+        <input type="number" class="field" id="age" formControlName="age" placeholder="Age">
+      </div>
+      <div class="group">
+        <label>Gender</label>
+        <select formControlName="gender" class="field">
+          <option *ngFor="let gender of genderOptions" [value]="gender">{{ gender }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn">Add doctor</button>
+    </form>
+  </div>
+</div>

@@ -6,19 +6,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UserRole } from '../../enums/user-role.enum';
-import { Gender } from '../../enums/gender.enum';
-import { User } from '../../model/user.interface';
-import { AuthService } from '../../services/auth.service';
+import { UserRole } from '../../../enums/user-role.enum';
+import { Gender } from '../../../enums/gender.enum';
+import { User } from '../../../model/user.interface';
+import { AuthService } from '../../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  templateUrl: './add-doctor.component.html',
+  styleUrl: './add-doctor.component.css',
 })
-export class RegisterComponent {
+export class AddDoctorComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   genderOptions = Object.values(Gender);
@@ -42,7 +42,7 @@ export class RegisterComponent {
       name: this.registerForm.value.name ?? '',
       age: this.registerForm.value.age ?? 0,
       gender: this.registerForm.value.gender ?? Gender.PreferNotToSay,
-      role: UserRole.Patient,
+      role: UserRole.Doctor,
       banned: false,
     };
   }
@@ -51,7 +51,7 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const user = this.formToUser();
       this.authService
-        .register(user, this.registerForm.value.password!)
+        .addUser(user, this.registerForm.value.password!)
         .subscribe({
           next: () => {
             this.router.navigate(['/']);

@@ -8,4 +8,5 @@ export interface User {
   age: number;
   gender: Gender;
   role: UserRole;
+  banned: boolean;
 }

@@ -10,6 +10,20 @@
   gap: 10px;
 }
 
+.buttons button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  width:100%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buttons button:hover {
+  background-color: #0056b3;
+}
+
 .options {
   justify-content: space-between;
   width: 100%;

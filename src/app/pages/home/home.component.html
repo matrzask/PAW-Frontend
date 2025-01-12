@@ -10,4 +10,7 @@
     <add-availability></add-availability>
     <add-absence></add-absence>
   </div>
+  <div class="buttons" *ngIf="user?.role == 'Admin'">
+    <button routerLink="/admin">Admin tools</button>
+  </div>
 </div>

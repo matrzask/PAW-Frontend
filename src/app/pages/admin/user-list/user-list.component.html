@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="users-container">
+    <h1>List of users</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button class="ban" *ngIf="!user.banned && user.role !== 'Admin'" (click)="banUser(user)">Ban</button>
+            <button class="unban" *ngIf="user.banned" (click)="unbanUser(user)">Unban</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

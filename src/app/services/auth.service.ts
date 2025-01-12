@@ -88,4 +88,20 @@ export class AuthService {
         })
       );
   }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.path}/users`);
+  }
+
+  addUser(user: User, password: string): Observable<any> {
+    return this.http.post<any>(`${this.path}/add-user`, { ...user, password });
+  }
+
+  banUser(user: User): Observable<any> {
+    return this.http.put<any>(`${this.path}/ban-user/${user.id}`, {});
+  }
+
+  unbanUser(user: User): Observable<any> {
+    return this.http.put<any>(`${this.path}/unban-user/${user.id}`, {});
+  }
 }

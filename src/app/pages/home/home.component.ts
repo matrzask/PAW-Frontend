@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { LoginButtonsComponent } from '../../components/login-buttons/login-buttons.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { LoginButtonsComponent } from '../../components/login-buttons/login-butt
     LogOutComponent,
     SwitchDoctorComponent,
     LoginButtonsComponent,
+    RouterModule,
   ],
 })
 export class HomeComponent {
