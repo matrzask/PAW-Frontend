@@ -10,21 +10,38 @@ import {
   collectionData,
   Firestore,
 } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
+import { UserRole } from '../enums/user-role.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DoctorService {
   private firestore = inject(Firestore);
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService,
+    private authService: AuthService
+  ) {
     this.configService.subscribeForChange().subscribe(() => {
       this.getDoctors().subscribe((doctors) => {
         this.updateDoctorId(doctors);
         this.doctorsChangedSubject.next(doctors);
       });
     });
+
     this.getDoctors().subscribe((doctors) => {
       this.updateDoctorId(doctors);
+    });
+
+    this.authService.currentUser.subscribe((user) => {
+      if (user?.user?.role === UserRole.Doctor) {
+        this.getDoctorByUserId(user.user.id).subscribe((doctor) => {
+          if (doctor) {
+            this.configService.doctorId = doctor.id;
+          }
+        });
+      }
     });
   }
 
@@ -61,14 +78,14 @@ export class DoctorService {
     }
   }
 
-  getDoctorById(doctorId: string) {
+  getDoctorByUserId(userId: string) {
     if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor>(`${this.path}/${doctorId}`);
+      return this.http.get<Doctor>(`${this.path}/${userId}`);
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorCollection, { idField: 'id' }).pipe(
         map((doctors: any[]) =>
-          doctors.find((doctor) => doctor.id === doctorId)
+          doctors.find((doctor) => doctor.userId === userId)
         )
       );
     } else {
