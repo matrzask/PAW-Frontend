@@ -1,9 +1,4 @@
-<div class="options">
-  <switch-source></switch-source>
-  <switch-doctor *ngIf="user?.role != 'Doctor'"></switch-doctor>
-  <log-out *ngIf="user"></log-out>
-  <login-buttons *ngIf="!user"></login-buttons>
-</div>
+<app-top-bar></app-top-bar>
 <div class="container" *ngIf="user">
   <app-calendar></app-calendar>
   <div class="buttons" *ngIf="user?.role == 'Doctor'">
