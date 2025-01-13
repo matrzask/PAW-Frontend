@@ -1,1 +1,45 @@
-<p>add-availability works!</p>
+<div class="container">
+  <app-top-bar></app-top-bar>
+  <div class="form-container">
+    <h1>Adding availability</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <input type="checkbox" id="oneTime" formControlName="oneTime">
+        <label for="oneTime">One time</label>
+      </div>
+      <div class="group">
+        <label for="startDate" class="section-label">Start date</label><br>
+        <input type="date" class="field" id="startDate" formControlName="startDate">
+      </div>
+      <div class="group" *ngIf="!form.get('oneTime')?.value">
+        <label for="endDate" class="section-label">End date</label><br>
+        <input type="date" class="field" id="endDate" formControlName="endDate">
+      </div>
+      <div class="group" *ngIf="!form.get('oneTime')?.value">
+        <label class="section-label">Days of the week</label>
+        <div *ngFor="let day of daysOfWeek; let i = index">
+          <input type="checkbox" (change)="onDayChange(day, $event)" [id]="day">
+          <label [for]="day">{{ day }}</label>
+        </div>
+      </div>
+      <div class="group">
+        <label class="section-label">Times</label>
+        <div formArrayName="times" class="times">
+          <div *ngFor="let time of timesFormArray.controls; let i = index" [formGroupName]="i">
+            <div class="group" class="time">
+              <label for="start">Start time</label>
+              <input type="time" formControlName="start" step="1800">
+            </div>
+            <div class="group" class="time">
+              <label for="end">End time</label>
+              <input type="time" formControlName="end" step="1800">
+            </div>
+            <button type="button" class="btn btn-danger" (click)="removeTime(i)">Remove</button>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="addTime()">Add Time</button>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

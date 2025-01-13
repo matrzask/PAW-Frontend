@@ -2,9 +2,5 @@
   <app-top-bar></app-top-bar>
   <div class="calendar-container" *ngIf="user">
     <app-calendar></app-calendar>
-    <div class="buttons" *ngIf="user?.role == 'Doctor'">
-      <add-availability></add-availability>
-      <add-absence></add-absence>
-    </div>
   </div>
 </div>

@@ -1,7 +1,6 @@
 <div class="container">
   <app-top-bar></app-top-bar>
   <div class="doctors-container">
-    <a class="back" routerLink="../"><- Go back</a>
     <h1>List of doctors</h1>
     <table>
       <thead>
@@ -16,7 +15,7 @@
           <td>{{ doctor.name }}</td>
           <td>{{ doctor.specialty }}</td>
           <td>
-            <button class="select" (click)="selectDoctor(doctor)" *ngIf="user">Select</button>
+            <button class="select" (click)="selectDoctor(doctor)" *ngIf="user && user.role !== 'Doctor'">Select</button>
           </td>
         </tr>
       </tbody>

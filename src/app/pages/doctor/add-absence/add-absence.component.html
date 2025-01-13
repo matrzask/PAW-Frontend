@@ -1,1 +1,18 @@
-<p>add-absence works!</p>
+<div class="container">
+  <app-top-bar></app-top-bar>
+  <div class="form-container">
+    <a class="back" routerLink="../"><- Go back</a>
+    <h1 class="form-title">Adding absence</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="group">
+        <label for="startDate" class="section-label">Start date</label><br>
+        <input type="date" class="field" id="startDate" formControlName="startDate">
+      </div>
+      <div class="group" *ngIf="!form.get('oneTime')?.value">
+        <label for="endDate" class="section-label">End date</label><br>
+        <input type="date" class="field" id="endDate" formControlName="endDate">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

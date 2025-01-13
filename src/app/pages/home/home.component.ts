@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { CalendarComponent } from '../../components/calendar/calendar.component';
-import { AddAvailabilityComponent } from '../../components/add-availability/add-availability.component';
-import { AddAbsenceComponent } from '../../components/add-absence/add-absence.component';
 import { CommonModule } from '@angular/common';
 import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
@@ -12,14 +10,7 @@ import { TopBarComponent } from '../../components/top-bar/top-bar.component';
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.css'],
-  imports: [
-    CommonModule,
-    CalendarComponent,
-    AddAvailabilityComponent,
-    AddAbsenceComponent,
-    RouterModule,
-    TopBarComponent,
-  ],
+  imports: [CommonModule, CalendarComponent, RouterModule, TopBarComponent],
 })
 export class HomeComponent {
   constructor(private authService: AuthService) {}
