@@ -12,6 +12,10 @@
   color: red;
 }
 
+.back {
+  align-self: flex-start;
+}
+
 .form-container {
   display: flex;
   justify-content: center;

@@ -1,5 +1,6 @@
 <div class="container">
   <div class="form-container">
+    <a class="back" routerLink="../"><- Go back</a>
     <h1>Add new doctor</h1>
     <p *ngIf="error" class="error">{{ error }}</p>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">

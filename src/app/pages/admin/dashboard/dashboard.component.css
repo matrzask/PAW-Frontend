@@ -20,6 +20,10 @@
   padding: 20px;
 }
 
+.back {
+  align-self: flex-start;
+}
+
 .buttons-container button {
   background-color: #007bff;
   border: none;
