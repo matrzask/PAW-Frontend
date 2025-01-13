@@ -1,7 +1,9 @@
-<div class="options">
-  <switch-source></switch-source>
-  <button *ngIf="user?.role != 'Doctor'" routerLink="./doctor-list">Doctor List</button>
-  <button *ngIf="user?.role == 'Admin'" routerLink="./admin">Admin tools</button>
-  <log-out *ngIf="user"></log-out>
-  <login-buttons *ngIf="!user"></login-buttons>
+<div class="container">
+  <div class="options">
+    <switch-source></switch-source>
+    <button *ngIf="user?.role != 'Doctor'" routerLink="./doctor-list">Doctor List</button>
+    <button *ngIf="user?.role == 'Admin'" routerLink="./admin">Admin tools</button>
+    <log-out *ngIf="user"></log-out>
+    <login-buttons *ngIf="!user"></login-buttons>
+  </div>
 </div>

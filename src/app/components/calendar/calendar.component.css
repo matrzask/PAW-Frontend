@@ -14,15 +14,11 @@
   border-collapse: collapse;
 }
 
-.calendar td + td,
-.calendar th + th { border-left: 1px solid #ddd; }
-.calendar tr + tr { border-top: 1px solid #ddd; }
-
 .calendar th {
   position: sticky;
   top: 0;
-  background-color: #f2f2f2;
-  color: #333;
+  background-color: #0056b3;
+  color: white;
   font-weight: bold;
   text-align: center;
   padding: 10px;
@@ -33,11 +29,13 @@
 }
 
 .calendar td {
-  background-color: #fff;
-  color: #333;
   text-align: center;
   height: 40px;
   min-width: 50px;
+}
+
+.calendar tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
 .timeslot {
@@ -50,7 +48,7 @@
 }
 
 .currentDay, .currentTimeslot {
-  color: #007bff !important;
+  color: #66b2ff !important;
   font-weight: bold !important;
 }
 

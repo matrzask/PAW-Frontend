@@ -93,8 +93,12 @@ export class AuthService {
     return this.http.get<User[]>(`${this.path}/users`);
   }
 
-  addUser(user: User, password: string): Observable<any> {
-    return this.http.post<any>(`${this.path}/add-user`, { ...user, password });
+  addUser(user: User, password: string, specialty?: string): Observable<any> {
+    return this.http.post<any>(`${this.path}/add-user`, {
+      ...user,
+      password,
+      specialty,
+    });
   }
 
   banUser(user: User): Observable<any> {

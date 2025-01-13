@@ -2,9 +2,6 @@
   margin: 0;
   padding: 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #0056b3;
 }
 
@@ -12,8 +9,9 @@
   border-radius: 10px;
   background-color: white;
   height: fit-content;
-  min-width: 800px;
+  max-width: 850px;
   padding: 20px;
+  margin: 40px auto 0;
 }
 
 .doctors-container h1 {

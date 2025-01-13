@@ -11,10 +11,11 @@ import { Gender } from '../../../enums/gender.enum';
 import { User } from '../../../model/user.interface';
 import { AuthService } from '../../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { TopBarComponent } from '../../../components/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopBarComponent],
   templateUrl: './add-doctor.component.html',
   styleUrl: './add-doctor.component.css',
 })
@@ -32,6 +33,7 @@ export class AddDoctorComponent {
     name: new FormControl('', Validators.required),
     age: new FormControl<number>(18, Validators.required),
     gender: new FormControl<Gender>(Gender.Male, Validators.required),
+    specialty: new FormControl<string>('', Validators.required),
   });
 
   error: string | null = null;
@@ -51,7 +53,11 @@ export class AddDoctorComponent {
     if (this.registerForm.valid) {
       const user = this.formToUser();
       this.authService
-        .addUser(user, this.registerForm.value.password!)
+        .addUser(
+          user,
+          this.registerForm.value.password!,
+          this.registerForm.value.specialty!
+        )
         .subscribe({
           next: () => {
             this.router.navigate(['/']);

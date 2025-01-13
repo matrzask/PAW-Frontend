@@ -2,9 +2,6 @@
   margin: 0;
   padding: 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #0056b3;
 }
 
@@ -22,6 +19,7 @@
   height: fit-content;
   width: 400px;
   padding: 20px;
+  margin: 40px auto 0;
 }
 
 form {

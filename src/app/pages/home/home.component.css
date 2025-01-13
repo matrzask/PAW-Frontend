@@ -1,13 +1,30 @@
 .container {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0056b3;
+}
+
+.calendar-container {
   display: flex;
   flex-direction: column;
   gap: 25px;
   align-items: center;
+  border-radius: 10px;
+  background-color: white;
+  height: fit-content;
+  max-width: 850px;
+  max-height: 80vh;
+  padding: 20px;
+  overflow: scroll;
+  margin: 40px auto 0;
 }
 
 .buttons {
   display: flex;
   gap: 10px;
+  margin-bottom: 10px;
 }
 
 .buttons button {

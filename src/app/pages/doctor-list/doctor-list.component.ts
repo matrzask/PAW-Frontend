@@ -6,10 +6,11 @@ import { Doctor } from '../../model/doctor.interface';
 import { Router, RouterModule } from '@angular/router';
 import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
+import { TopBarComponent } from '../../components/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-doctor-list',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TopBarComponent],
   templateUrl: './doctor-list.component.html',
   styleUrl: './doctor-list.component.css',
 })

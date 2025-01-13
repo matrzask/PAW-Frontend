@@ -11,10 +11,11 @@ import { Gender } from '../../enums/gender.enum';
 import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { TopBarComponent } from '../../components/top-bar/top-bar.component';
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, TopBarComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 import { User } from '../../../model/user.interface';
 import { AuthService } from '../../../services/auth.service';
 import { RouterModule } from '@angular/router';
+import { TopBarComponent } from '../../../components/top-bar/top-bar.component';
 
 @Component({
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TopBarComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })

@@ -2,9 +2,6 @@
   margin: 0;
   padding: 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #0056b3;
 }
 
@@ -12,8 +9,9 @@
   border-radius: 10px;
   background-color: white;
   height: fit-content;
-  min-width: 800px;
+  max-width: 850px;
   padding: 20px;
+  margin: 40px auto 0;
 }
 
 .users-container h1 {
@@ -39,4 +37,17 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #003366;
 }

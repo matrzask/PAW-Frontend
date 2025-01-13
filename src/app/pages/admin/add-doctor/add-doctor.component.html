@@ -1,4 +1,5 @@
 <div class="container">
+  <app-top-bar></app-top-bar>
   <div class="form-container">
     <a class="back" routerLink="../"><- Go back</a>
     <h1>Add new doctor</h1>
@@ -18,6 +19,8 @@
           <option *ngFor="let gender of genderOptions" [value]="gender">{{ gender }}</option>
         </select>
       </div>
+      <hr>
+      <input type="text" class="field" id="specialty" formControlName="specialty" placeholder="Doctor specialization">
       <button type="submit" class="btn">Add doctor</button>
     </form>
   </div>

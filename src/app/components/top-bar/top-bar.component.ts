@@ -25,6 +25,6 @@ export class TopBarComponent {
   user: User | null = null;
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
   }
 }

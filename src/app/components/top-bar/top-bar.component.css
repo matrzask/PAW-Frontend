@@ -1,11 +1,17 @@
+.container {
+  position: sticky;
+  top: 0;
+  background-color: #0056b3;
+}
+
 .options {
   display: flex;
   gap: 10px;
   justify-content: space-between;
   width: 100%;
-  padding: 0 20px;
+  height: 75px;
+  padding: 5px 20px 10px;
   box-sizing: border-box;
-  margin-bottom: 20px;
   align-items: flex-end;
   background-color: white;
   border-bottom-left-radius: 10px;
@@ -19,6 +25,7 @@ button {
   padding: 10px 40px;
   border-radius: 5px;
   cursor: pointer;
+  height: 100%;
 }
 
 button:hover {
