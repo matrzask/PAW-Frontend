@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="doctors-container">
+    <a class="back" routerLink=""><- Go back</a>
+    <h1>List of doctors</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specialty</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let doctor of doctors">
+          <td>{{ doctor.name }}</td>
+          <td>{{ doctor.specialty }}</td>
+          <td>
+            <button class="select" (click)="selectDoctor(doctor)">Select</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
