@@ -12,7 +12,7 @@
   height: 75px;
   padding: 5px 20px 10px;
   box-sizing: border-box;
-  align-items: flex-end;
+  align-items: stretch;
   background-color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

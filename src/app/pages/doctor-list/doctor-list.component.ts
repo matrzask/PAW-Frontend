@@ -29,7 +29,7 @@ export class DoctorListComponent {
     this.doctorService.getDoctors().subscribe((doctors) => {
       this.doctors = doctors;
     });
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
   }
 
   selectDoctor(doctor: Doctor) {
