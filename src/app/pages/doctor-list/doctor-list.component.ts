@@ -29,13 +29,16 @@ export class DoctorListComponent {
     this.doctorService.getDoctors().subscribe((doctors) => {
       this.doctors = doctors;
     });
+    this.doctorService.subscribeForChange().subscribe((doctors) => {
+      this.doctors = doctors;
+    });
     this.user = this.authService.currentUserValue?.user;
   }
 
   selectDoctor(doctor: Doctor) {
     if (doctor.id) {
       this.configService.doctorId = doctor.id;
-      this.router.navigate(['']);
+      this.router.navigate(['calendar']);
     }
   }
 }
