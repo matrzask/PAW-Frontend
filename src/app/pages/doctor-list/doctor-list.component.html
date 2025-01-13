@@ -15,7 +15,7 @@
           <td>{{ doctor.name }}</td>
           <td>{{ doctor.specialty }}</td>
           <td>
-            <button class="select" (click)="selectDoctor(doctor)">Select</button>
+            <button class="select" (click)="selectDoctor(doctor)" *ngIf="user">Select</button>
           </td>
         </tr>
       </tbody>
