@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from './config.service';
 import { DataSource } from '../enums/data-source.enum';
 import { HttpClient } from '@angular/common/http';
-import { map, Subject } from 'rxjs';
+import { from, map, Subject } from 'rxjs';
 import {
   addDoc,
   collection,
@@ -60,11 +60,13 @@ export class ReviewService {
       );
     } else if (this.configService.source == DataSource.FIREBASE) {
       const reviewsCollection = collection(this.firestore, 'review');
-      return addDoc(reviewsCollection, review).then(() => {
-        this.getReviews(review.doctorId).subscribe((reviews) => {
-          this.reviewsChangedSubject.next(reviews);
-        });
-      });
+      return from(addDoc(reviewsCollection, review)).pipe(
+        map(() => {
+          this.getReviews(review.doctorId).subscribe((reviews) => {
+            this.reviewsChangedSubject.next(reviews);
+          });
+        })
+      );
     } else {
       throw new Error('Data source not supported');
     }

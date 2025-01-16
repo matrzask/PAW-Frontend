@@ -11,6 +11,8 @@
         <div class="content">{{ review.content }}</div>
       </div>
     </div>
-    <button class="new" *ngIf="user?.role === 'Patient' && !user?.banned">Add new review</button>
+    <button class="new" *ngIf="user?.role === 'Patient' && !user?.banned" (click)="openReviewPopup()">Add new review</button>
   </div>
 </div>
+
+<app-review-pop-up [visible]="showReviewPopup" (close)="onClosePopup()" (confirm)="onConfirmReview()" [doctorId]="doctor?.id ?? ''"></app-review-pop-up>

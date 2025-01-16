@@ -1,0 +1,19 @@
+<div class="popup-backdrop" *ngIf="visible">
+  <div class="popup">
+    <div class="top">
+      <button (click)="onClose()" class="close">X</button>
+    </div>
+    <h2>Adding review</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="rating">Doctor rating (1-5)</label>
+        <input type="number" formControlName="rating" id="rating" min="1" max="5" class="field">
+      </div>
+      <div class="form-group">
+        <label for="content">Comment</label>
+        <textarea formControlName="content" id="content"></textarea>
+      </div>
+      <button type="submit" class="confirm">Confirm</button>
+    </form>
+  </div>
+</div>

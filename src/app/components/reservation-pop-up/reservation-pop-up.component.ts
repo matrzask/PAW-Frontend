@@ -103,7 +103,6 @@ export class ReservationPopUpComponent {
 
   onSubmit() {
     if (this.form.invalid) {
-      console.log(this.form.get('duration')?.value, this.maxDuration * 30);
       return;
     }
     this.consultationService
