@@ -1,0 +1,16 @@
+<div class="container">
+  <app-top-bar></app-top-bar>
+  <div class="reviews-container">
+    <h1>Reviews for {{ doctor?.name }}</h1>
+    <div class="reviews">
+      <div class="review" *ngFor="let review of reviews">
+        <div class="review-header">
+          <span class="author">{{ review.author }} </span>-
+          <span class="rating"> {{ review.rating }}/5</span>
+        </div>
+        <div class="content">{{ review.content }}</div>
+      </div>
+    </div>
+    <button class="new" *ngIf="user?.role === 'Patient' && !user?.banned">Add new review</button>
+  </div>
+</div>

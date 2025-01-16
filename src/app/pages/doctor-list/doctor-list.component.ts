@@ -41,4 +41,10 @@ export class DoctorListComponent {
       this.router.navigate(['calendar']);
     }
   }
+
+  viewReviews(doctor: Doctor) {
+    if (doctor.id) {
+      this.router.navigate(['reviews', doctor.id]);
+    }
+  }
 }

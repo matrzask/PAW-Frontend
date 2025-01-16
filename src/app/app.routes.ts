@@ -9,6 +9,7 @@ import { DoctorListComponent } from './pages/doctor-list/doctor-list.component';
 import { doctorRoutes } from './pages/doctor/doctor.routes';
 import { DoctorGuard } from './guards/doctor.guard';
 import { RedirectGuard } from './guards/redirect.guard';
+import { ReviewsComponent } from './pages/reviews/reviews.component';
 
 export const routes: Routes = [
   { path: '', canActivate: [RedirectGuard], pathMatch: 'full' },
@@ -18,4 +19,5 @@ export const routes: Routes = [
   { path: 'admin', children: adminRoutes, canActivate: [AdminGuard] },
   { path: 'doctor-list', component: DoctorListComponent },
   { path: 'doctor', children: doctorRoutes, canActivate: [DoctorGuard] },
+  { path: 'reviews/:id', component: ReviewsComponent },
 ];

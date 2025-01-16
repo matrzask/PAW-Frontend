@@ -9,6 +9,7 @@
   border-radius: 10px;
   background-color: white;
   height: fit-content;
+  overflow-y: auto;
   max-width: 850px;
   padding: 20px;
   margin: 40px auto 0;
@@ -50,4 +51,10 @@ button {
 
 button:hover {
   background-color: #003366;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap:10px;
 }

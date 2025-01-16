@@ -14,8 +14,9 @@
         <tr *ngFor="let doctor of doctors">
           <td>{{ doctor.name }}</td>
           <td>{{ doctor.specialty }}</td>
-          <td>
+          <td class="buttons">
             <button class="select" (click)="selectDoctor(doctor)" *ngIf="user && user.role !== 'Doctor'">Select</button>
+            <button class="reviews" (click)="viewReviews(doctor)">Reviews</button>
           </td>
         </tr>
       </tbody>
