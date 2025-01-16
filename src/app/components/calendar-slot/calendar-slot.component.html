@@ -1,4 +1,4 @@
-<div [ngClass]="{free: isFree(), reserved: isReserved() && !isExpired()}" [style]="{ 'background-color': getColor() }" (click)="onClick()" *ngIf="(!cancelled && !isExpired()) || isReserved()" (mousemove)="toggleTooltip(true, $event)" (mouseleave)="toggleTooltip(false, $event)">
+<div [ngClass]="{free: isFree(), clickable: canClick() && !isExpired()}" [style]="{ 'background-color': getColor() }" (click)="onClick()" *ngIf="(!cancelled && !isExpired()) || isReserved()" (mousemove)="toggleTooltip(true, $event)" (mouseleave)="toggleTooltip(false, $event)">
   {{ getText() }}
   <div class="tooltip" *ngIf="showTooltip && timeslot.consultation" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
     <p>Patient {{ timeslot.consultation.patient }}, Age {{ timeslot.consultation.patientAge }}, Gender: {{ timeslot.consultation.patientGender }}</p>

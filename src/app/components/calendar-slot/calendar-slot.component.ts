@@ -3,6 +3,9 @@ import { Consultation } from '../../model/consultation.interface';
 import { CommonModule } from '@angular/common';
 import { ReservationPopUpComponent } from '../reservation-pop-up/reservation-pop-up.component';
 import { CancelConsultationComponent } from '../cancel-consultation/cancel-consultation.component';
+import { User } from '../../model/user.interface';
+import { AuthService } from '../../services/auth.service';
+import { UserRole } from '../../enums/user-role.enum';
 
 @Component({
   selector: 'app-calendar-slot',
@@ -15,6 +18,8 @@ import { CancelConsultationComponent } from '../cancel-consultation/cancel-consu
   ],
 })
 export class CalendarSlotComponent {
+  constructor(private authService: AuthService) {}
+
   @Input() timeslot!: { date: Date; consultation?: Consultation };
   @Input() cancelled = false;
   @Input() maxDuration = 1;
@@ -25,14 +30,37 @@ export class CalendarSlotComponent {
   tooltipX = 0;
   tooltipY = 0;
 
+  user: User | null = null;
+
+  ngOnInit() {
+    this.user = this.authService.currentUserValue.user;
+  }
+
   onClick(): void {
-    if (this.isReserved() && !this.isExpired()) {
+    if (
+      this.user?.role === UserRole.Doctor &&
+      this.isReserved() &&
+      !this.isExpired()
+    ) {
       this.showCancelPopup = true;
     }
-    if (!this.isFree()) return;
-    if (this.timeslot.date) {
+    if (this.user?.role === UserRole.Patient && this.isFree()) {
       this.showReservePopup = true;
     }
+  }
+
+  canClick(): boolean {
+    if (this.user?.role === UserRole.Patient && this.isFree()) {
+      return true;
+    }
+    if (
+      this.user?.role === UserRole.Doctor &&
+      this.isReserved() &&
+      !this.isExpired()
+    ) {
+      return true;
+    }
+    return false;
   }
 
   onClosePopup() {

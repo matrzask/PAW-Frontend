@@ -8,11 +8,11 @@ div {
   justify-content: center;
 }
 
-.free, .reserved {
+.clickable {
   cursor: pointer;
 }
 
-.free:hover {
+.clickable.free:hover {
   background-color: #b0e0e6 !important;
 }
 
