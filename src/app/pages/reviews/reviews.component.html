@@ -9,6 +9,7 @@
           <span class="rating"> {{ review.rating }}/5</span>
         </div>
         <div class="content">{{ review.content }}</div>
+        <button class="delete" *ngIf="user?.role === 'Admin'" (click)="deleteReview(review.id ?? '')">Delete</button>
       </div>
     </div>
     <button class="new" *ngIf="user?.role === 'Patient' && !user?.banned" (click)="openReviewPopup()">Add new review</button>

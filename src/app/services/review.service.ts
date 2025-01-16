@@ -7,6 +7,8 @@ import {
   addDoc,
   collection,
   collectionData,
+  deleteDoc,
+  doc,
   Firestore,
   query,
   where,
@@ -23,7 +25,7 @@ export class ReviewService {
     private firestore: Firestore
   ) {}
 
-  private reviewsChangedSubject = new Subject<Review[]>();
+  private reviewsChangedSubject = new Subject<void>();
 
   readonly path = 'http://localhost:3000/review';
 
@@ -52,9 +54,7 @@ export class ReviewService {
     if (this.configService.source == DataSource.SERVER) {
       return this.http.post<Review>(this.path, review).pipe(
         map((data: any) => {
-          this.getReviews(review.doctorId).subscribe((reviews) => {
-            this.reviewsChangedSubject.next(reviews);
-          });
+          this.reviewsChangedSubject.next();
           return data;
         })
       );
@@ -62,9 +62,26 @@ export class ReviewService {
       const reviewsCollection = collection(this.firestore, 'review');
       return from(addDoc(reviewsCollection, review)).pipe(
         map(() => {
-          this.getReviews(review.doctorId).subscribe((reviews) => {
-            this.reviewsChangedSubject.next(reviews);
-          });
+          this.reviewsChangedSubject.next();
+        })
+      );
+    } else {
+      throw new Error('Data source not supported');
+    }
+  }
+
+  deleteReview(reviewId: string) {
+    if (this.configService.source == DataSource.SERVER) {
+      return this.http.delete(`${this.path}/${reviewId}`).pipe(
+        map(() => {
+          this.reviewsChangedSubject.next();
+        })
+      );
+    } else if (this.configService.source == DataSource.FIREBASE) {
+      const reviewDocRef = doc(this.firestore, 'review', reviewId);
+      return from(deleteDoc(reviewDocRef)).pipe(
+        map(() => {
+          this.reviewsChangedSubject.next();
         })
       );
     } else {

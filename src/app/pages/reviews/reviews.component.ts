@@ -48,6 +48,12 @@ export class ReviewsComponent {
     this.user = this.authService.currentUserValue?.user;
   }
 
+  deleteReview(reviewId: string) {
+    this.reviewService.deleteReview(reviewId).subscribe(() => {
+      console.log(`Review ${reviewId} deleted`);
+    });
+  }
+
   openReviewPopup() {
     this.showReviewPopup = true;
   }
