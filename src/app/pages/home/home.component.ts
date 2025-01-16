@@ -5,6 +5,8 @@ import { User } from '../../model/user.interface';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
 import { TopBarComponent } from '../../components/top-bar/top-bar.component';
+import { Doctor } from '../../model/doctor.interface';
+import { DoctorService } from '../../services/doctor.service';
 
 @Component({
   selector: 'app-home',
@@ -13,11 +15,24 @@ import { TopBarComponent } from '../../components/top-bar/top-bar.component';
   imports: [CommonModule, CalendarComponent, RouterModule, TopBarComponent],
 })
 export class HomeComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private doctorService: DoctorService
+  ) {}
 
   user?: User;
+  doctor?: Doctor;
 
   ngOnInit() {
     this.user = this.authService.currentUserValue?.user;
+    this.doctorService.getDoctorById().subscribe((doctor) => {
+      this.doctor = doctor;
+    });
+
+    this.doctorService.subscribeForChange().subscribe((doctor) => {
+      this.doctorService.getDoctorById().subscribe((doctor) => {
+        this.doctor = doctor;
+      });
+    });
   }
 }

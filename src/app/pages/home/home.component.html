@@ -1,6 +1,7 @@
 <div class="container">
   <app-top-bar></app-top-bar>
   <div class="calendar-container" *ngIf="user">
+    <h1>{{ doctor?.name }} - {{ doctor?.specialty }}</h1>
     <app-calendar></app-calendar>
   </div>
 </div>

@@ -22,7 +22,7 @@ import { RouterModule } from '@angular/router';
 export class TopBarComponent {
   constructor(private authService: AuthService) {}
 
-  user: User | null = null;
+  user?: User;
 
   ngOnInit() {
     this.user = this.authService.currentUserValue?.user;

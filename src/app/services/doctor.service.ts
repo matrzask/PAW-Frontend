@@ -23,13 +23,6 @@ export class DoctorService {
     private configService: ConfigService,
     private authService: AuthService
   ) {
-    this.configService.subscribeForChange().subscribe(() => {
-      this.getDoctors().subscribe((doctors) => {
-        this.updateDoctorId(doctors);
-        this.doctorsChangedSubject.next(doctors);
-      });
-    });
-
     this.getDoctors().subscribe((doctors) => {
       this.updateDoctorId(doctors);
     });
@@ -78,9 +71,24 @@ export class DoctorService {
     }
   }
 
+  getDoctorById(doctorId: string = this.configService.doctorId) {
+    if (this.configService.source === DataSource.SERVER) {
+      return this.http.get<Doctor>(`${this.path}/${doctorId}`);
+    } else if (this.configService.source === DataSource.FIREBASE) {
+      const doctorCollection = collection(this.firestore, 'doctor');
+      return collectionData(doctorCollection, { idField: 'id' }).pipe(
+        map((doctors: any[]) =>
+          doctors.find((doctor) => doctor.id === doctorId)
+        )
+      );
+    } else {
+      throw new Error('Data source not supported');
+    }
+  }
+
   getDoctorByUserId(userId: string) {
     if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor>(`${this.path}/${userId}`);
+      return this.http.get<Doctor>(`${this.path}/user/${userId}`);
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorCollection, { idField: 'id' }).pipe(

@@ -23,7 +23,7 @@ export class DoctorListComponent {
   ) {}
 
   doctors: Doctor[] = [];
-  user: User | null = null;
+  user?: User;
 
   ngOnInit() {
     this.doctorService.getDoctors().subscribe((doctors) => {

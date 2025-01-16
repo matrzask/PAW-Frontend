@@ -30,10 +30,10 @@ export class CalendarSlotComponent {
   tooltipX = 0;
   tooltipY = 0;
 
-  user: User | null = null;
+  user?: User;
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue.user;
+    this.user = this.authService.currentUserValue?.user;
   }
 
   onClick(): void {
