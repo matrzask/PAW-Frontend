@@ -233,7 +233,9 @@
       "author": "Marta Karta",
       "content": "Great doctor!",
       "doctorId": "6783070e4656f53940103e00",
-      "rating": 5
+      "rating": 5,
+      "id": "f447",
+      "reply": "Thank you!"
     },
     {
       "id": "2b83",

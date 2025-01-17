@@ -1,6 +1,7 @@
 <div class="container">
   <app-top-bar></app-top-bar>
   <div class="reviews-container">
+    <a class="back" routerLink="/"><- Go back</a>
     <h1>Reviews for {{ doctor?.name }}</h1>
     <div class="reviews">
       <div class="review" *ngFor="let review of reviews">
@@ -9,11 +10,14 @@
           <span class="rating"> {{ review.rating }}/5</span>
         </div>
         <div class="content">{{ review.content }}</div>
-        <button class="delete" *ngIf="user?.role === 'Admin'" (click)="deleteReview(review.id ?? '')">Delete</button>
+        <div class="reply" *ngIf="review.reply">{{ review.reply }}</div>
+        <button class="innerButton" *ngIf="user?.role === 'Admin'" (click)="deleteReview(review.id ?? '')">Delete</button>
+        <button class="innerButton" *ngIf="user?.role === 'Doctor' && !user?.banned" (click)="openReplyPopup(review.id ?? '')">Add/Edit reply</button>
       </div>
     </div>
     <button class="new" *ngIf="user?.role === 'Patient' && !user?.banned" (click)="openReviewPopup()">Add new review</button>
   </div>
 </div>
 
-<app-review-pop-up [visible]="showReviewPopup" (close)="onClosePopup()" (confirm)="onConfirmReview()" [doctorId]="doctor?.id ?? ''"></app-review-pop-up>
+<app-review-pop-up [visible]="showReviewPopup" (close)="onClosePopup()" (confirm)="onClosePopup()" [doctorId]="doctor?.id ?? ''"></app-review-pop-up>
+<app-review-reply [visible]="showReplyPopup" (close)="onClosePopup()" (confirm)="onClosePopup()" [reviewId]="selectedReviewId ?? ''"></app-review-reply>

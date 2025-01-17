@@ -3,6 +3,7 @@
     <switch-source></switch-source>
     <button *ngIf="user?.role != 'Doctor'" routerLink="/doctor-list">Doctor List</button>
     <button *ngIf="user?.role == 'Admin'" routerLink="/admin">Admin tools</button>
+    <button *ngIf="user?.role == 'Doctor'" [routerLink]="['/reviews', doctorId]">My reviews</button>
     <button *ngIf="user?.role == 'Doctor'" routerLink="/doctor">Manage schedule</button>
     <log-out *ngIf="user"></log-out>
     <login-buttons *ngIf="!user"></login-buttons>

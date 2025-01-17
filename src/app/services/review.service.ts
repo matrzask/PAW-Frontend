@@ -11,6 +11,7 @@ import {
   doc,
   Firestore,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { Review } from '../model/review.interface';
@@ -73,6 +74,33 @@ export class ReviewService {
     } else if (this.configService.source == DataSource.FIREBASE) {
       const reviewsCollection = collection(this.firestore, 'review');
       return from(addDoc(reviewsCollection, review)).pipe(
+        map(() => {
+          this.reviewsChangedSubject.next();
+        })
+      );
+    } else {
+      throw new Error('Data source not supported');
+    }
+  }
+
+  addReply(reviewId: string, reply: string) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http
+        .patch(`${this.configService.apiUrl}/review/${reviewId}`, {
+          doctorId: this.configService.doctorId,
+          reply: reply,
+        })
+        .pipe(
+          map(() => {
+            this.reviewsChangedSubject.next();
+          })
+        );
+    } else if (this.configService.source === DataSource.FIREBASE) {
+      const reviewDocRef = doc(this.firestore, 'review', reviewId);
+      return from(updateDoc(reviewDocRef, { reply })).pipe(
         map(() => {
           this.reviewsChangedSubject.next();
         })

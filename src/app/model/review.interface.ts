@@ -4,4 +4,5 @@ export interface Review {
   rating: number;
   content: string;
   doctorId: string;
+  reply?: string;
 }
