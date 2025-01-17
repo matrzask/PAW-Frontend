@@ -12,6 +12,8 @@ export class ConfigService {
     this.loadSettings();
   }
 
+  readonly basePath = 'http://localhost:';
+
   private _source: DataSource = DataSource.SERVER;
   public get source(): DataSource {
     return this._source;
@@ -30,6 +32,19 @@ export class ConfigService {
     this._doctorId = value;
     this.saveSettings();
     this.configChangedSubject.next();
+  }
+
+  public get apiUrl(): string {
+    let port;
+    switch (this._source) {
+      case DataSource.SERVER:
+        port = '3000';
+        break;
+      case DataSource.JSON:
+        port = '3125';
+        break;
+    }
+    return this.basePath + port;
   }
 
   private saveSettings() {

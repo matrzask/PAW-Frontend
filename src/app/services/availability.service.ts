@@ -29,13 +29,14 @@ export class AvailabilityService {
     });
   }
 
-  readonly path = 'http://localhost:3000/availability';
-
   getAvailability() {
-    if (this.configService.source === DataSource.SERVER) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
       return this.http
         .get<Availability[]>(
-          `${this.path}?doctorId=${this.configService.doctorId}`
+          `${this.configService.apiUrl}/availability?doctorId=${this.configService.doctorId}`
         )
         .pipe(
           map((availabilities) =>
@@ -87,9 +88,15 @@ export class AvailabilityService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.SERVER) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
       return this.http
-        .post<Availability>(this.path, formattedAvailability)
+        .post<Availability>(
+          this.configService.apiUrl + '/availability',
+          formattedAvailability
+        )
         .pipe(
           map(() => {
             this.getAvailability().subscribe((availabilities) =>

@@ -2,7 +2,7 @@
   "availability": [
     {
       "id": "18a0",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "oneTime": false,
       "startDate": "2025-01-01T00:00:00Z",
       "endDate": "2025-12-31T00:00:00Z",
@@ -26,7 +26,7 @@
     },
     {
       "id": "18a1",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "oneTime": false,
       "startDate": "2025-01-01T00:00:00Z",
       "endDate": "2025-12-31T00:00:00Z",
@@ -42,7 +42,7 @@
     },
     {
       "id": "19a0",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "oneTime": false,
       "startDate": "2025-01-03T00:00:00.000Z",
       "endDate": "2025-01-31T00:00:00.000Z",
@@ -63,7 +63,7 @@
     },
     {
       "id": "9558",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "oneTime": true,
       "startDate": "2024-12-30T00:00:00.000Z",
       "daysOfWeek": [],
@@ -76,7 +76,7 @@
     },
     {
       "id": "e2d5",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "oneTime": true,
       "startDate": "2024-12-31T00:00:00.000Z",
       "daysOfWeek": [],
@@ -105,7 +105,7 @@
           "end": "17:00"
         }
       ],
-      "doctorId": "2"
+      "doctorId": "6783070e4656f53940103e00"
     },
     {
       "id": "446d",
@@ -118,7 +118,7 @@
           "end": "12:00"
         }
       ],
-      "doctorId": "1"
+      "doctorId": "6789207d841c144d168187cc"
     },
     {
       "id": "055e",
@@ -132,7 +132,7 @@
           "end": "07:00"
         }
       ],
-      "doctorId": "1"
+      "doctorId": "6789207d841c144d168187cc"
     },
     {
       "id": "f120",
@@ -146,13 +146,13 @@
           "end": "16:00"
         }
       ],
-      "doctorId": "1"
+      "doctorId": "6789207d841c144d168187cc"
     }
   ],
   "absence": [
     {
       "id": "3399",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "startDate": "2025-01-05T00:00:00.000Z",
       "endDate": "2025-01-05T00:00:00.000Z"
     }
@@ -160,7 +160,7 @@
   "consultation": [
     {
       "id": "286f",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "date": "2025-01-04T18:30:00.000Z",
       "duration": 3,
       "type": "First Consultation",
@@ -171,7 +171,7 @@
     },
     {
       "id": "1be8",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "date": "2025-01-05T18:00:00.000Z",
       "duration": 2,
       "type": "Check-up",
@@ -182,7 +182,7 @@
     },
     {
       "id": "f4c3",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "date": "2025-01-04T20:00:00.000Z",
       "duration": 2,
       "type": "Emergency",
@@ -193,7 +193,7 @@
     },
     {
       "id": "e7fc",
-      "doctorId": "1",
+      "doctorId": "6789207d841c144d168187cc",
       "date": "2025-01-05T20:00:00.000Z",
       "duration": 2,
       "type": "Follow-up",
@@ -211,17 +211,36 @@
       "patientGender": "Male",
       "patientAge": 7,
       "details": "Test",
-      "doctorId": "1"
+      "doctorId": "6789207d841c144d168187cc"
     }
   ],
   "doctor": [
     {
-      "id": "1",
-      "name": "Dr. Jan Kowalski"
+      "id": "6789207d841c144d168187cc",
+      "name": "Dr. Jan Kowalski",
+      "specialty": "Cardiologist",
+      "userId": "6789207d841c144d168187ca"
     },
     {
-      "id": "2",
-      "name": "Dr. Anna Nowak"
+      "id": "6783070e4656f53940103e00",
+      "name": "Dr. Anna Kowal",
+      "specialty": "Dentist",
+      "userId": "6783070e4656f53940103dfe"
+    }
+  ],
+  "review": [
+    {
+      "author": "Marta Karta",
+      "content": "Great doctor!",
+      "doctorId": "6783070e4656f53940103e00",
+      "rating": 5
+    },
+    {
+      "id": "2b83",
+      "rating": 4,
+      "content": "Lorem ipsum dolor sit amet.",
+      "author": "Adam Nowak",
+      "doctorId": "6783070e4656f53940103e00"
     }
   ]
 }

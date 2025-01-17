@@ -46,8 +46,6 @@ export class DoctorService {
 
   private doctorsChangedSubject = new Subject<Doctor[]>();
 
-  readonly path = 'http://localhost:3000/doctor';
-
   private updateDoctorId(doctors: Doctor[]) {
     if (
       doctors.length > 0 &&
@@ -60,8 +58,11 @@ export class DoctorService {
   }
 
   getDoctors() {
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor[]>(this.path);
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http.get<Doctor[]>(this.configService.apiUrl + '/doctor');
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorsCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorsCollection, { idField: 'id' }).pipe(
@@ -78,8 +79,13 @@ export class DoctorService {
   }
 
   getDoctorById(doctorId: string = this.configService.doctorId) {
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor>(`${this.path}/${doctorId}`);
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http.get<Doctor>(
+        `${this.configService.apiUrl}/doctor/${doctorId}`
+      );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorCollection, { idField: 'id' }).pipe(
@@ -93,8 +99,13 @@ export class DoctorService {
   }
 
   getDoctorByUserId(userId: string) {
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.get<Doctor>(`${this.path}/user/${userId}`);
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http.get<Doctor>(
+        `${this.configService.apiUrl}/doctor/user/${userId}`
+      );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorCollection = collection(this.firestore, 'doctor');
       return collectionData(doctorCollection, { idField: 'id' }).pipe(
@@ -108,14 +119,19 @@ export class DoctorService {
   }
 
   addDoctor(doctor: Doctor) {
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.post<Doctor>(this.path, doctor).pipe(
-        map(() => {
-          this.getDoctors().subscribe((doctors) => {
-            this.doctorsChangedSubject.next(doctors);
-          });
-        })
-      );
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http
+        .post<Doctor>(this.configService.apiUrl + '/doctor', doctor)
+        .pipe(
+          map(() => {
+            this.getDoctors().subscribe((doctors) => {
+              this.doctorsChangedSubject.next(doctors);
+            });
+          })
+        );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const doctorsCollection = collection(this.firestore, 'doctor');
       return from(addDoc(doctorsCollection, doctor)).pipe(

@@ -29,12 +29,15 @@ export class AbsenceService {
     });
   }
 
-  readonly path = 'http://localhost:3000/absence';
-
   getAbsences() {
-    if (this.configService.source === DataSource.SERVER) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
       return this.http
-        .get<Absence[]>(`${this.path}?doctorId=${this.configService.doctorId}`)
+        .get<Absence[]>(
+          `${this.configService.apiUrl}/absence?doctorId=${this.configService.doctorId}`
+        )
         .pipe(
           map((absence) =>
             absence.map((absence) => ({
@@ -74,14 +77,19 @@ export class AbsenceService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.post<Absence>(this.path, formattedAbsence).pipe(
-        map(() => {
-          this.getAbsences().subscribe((absences) =>
-            this.absenceChangedSubject.next(absences)
-          );
-        })
-      );
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http
+        .post<Absence>(this.configService.apiUrl + '/absence', formattedAbsence)
+        .pipe(
+          map(() => {
+            this.getAbsences().subscribe((absences) =>
+              this.absenceChangedSubject.next(absences)
+            );
+          })
+        );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const absencesCollection = collection(this.firestore, 'absence');
       return from(addDoc(absencesCollection, formattedAbsence)).pipe(

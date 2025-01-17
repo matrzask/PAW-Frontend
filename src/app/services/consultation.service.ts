@@ -31,13 +31,14 @@ export class ConsultationService {
     });
   }
 
-  readonly path = 'http://localhost:3000/consultation';
-
   getConsultations() {
-    if (this.configService.source === DataSource.SERVER) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
       return this.http
         .get<Consultation[]>(
-          `${this.path}?doctorId=${this.configService.doctorId}`
+          `${this.configService.apiUrl}/consultation?doctorId=${this.configService.doctorId}`
         )
         .pipe(
           map((consultations) =>
@@ -76,9 +77,15 @@ export class ConsultationService {
       doctorId: this.configService.doctorId,
     };
 
-    if (this.configService.source === DataSource.SERVER) {
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
       return this.http
-        .post<Consultation>(this.path, formattedConsultation)
+        .post<Consultation>(
+          this.configService.apiUrl + '/consultation',
+          formattedConsultation
+        )
         .pipe(
           map(() => {
             this.getConsultations().subscribe((consultations) => {
@@ -104,14 +111,19 @@ export class ConsultationService {
   }
 
   deleteConsultation(consultationId: string) {
-    if (this.configService.source === DataSource.SERVER) {
-      return this.http.delete(`${this.path}/${consultationId}`).pipe(
-        map(() => {
-          this.getConsultations().subscribe((consultations) => {
-            this.consultationChangedSubject.next(consultations);
-          });
-        })
-      );
+    if (
+      this.configService.source === DataSource.SERVER ||
+      this.configService.source === DataSource.JSON
+    ) {
+      return this.http
+        .delete(`${this.configService.apiUrl}/consultation/${consultationId}`)
+        .pipe(
+          map(() => {
+            this.getConsultations().subscribe((consultations) => {
+              this.consultationChangedSubject.next(consultations);
+            });
+          })
+        );
     } else if (this.configService.source === DataSource.FIREBASE) {
       const consultationDocRef = doc(
         this.firestore,
