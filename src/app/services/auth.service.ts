@@ -74,15 +74,19 @@ export class AuthService {
       })
       .pipe(
         tap((response) => {
-          const token = response.data.token;
-          const refreshToken = response.data.refreshToken;
-          if (token && refreshToken) {
-            const user = currentUser.user;
-            localStorage.setItem(
-              'currentUser',
-              JSON.stringify({ user, token, refreshToken })
-            );
-            this.currentUserSubject.next({ user, token, refreshToken });
+          if (response.status === 'fail') {
+            throw new Error(response.message);
+          } else {
+            const token = response.data.token;
+            const refreshToken = response.data.refreshToken;
+            if (token && refreshToken) {
+              const user = currentUser.user;
+              localStorage.setItem(
+                'currentUser',
+                JSON.stringify({ user, token, refreshToken })
+              );
+              this.currentUserSubject.next({ user, token, refreshToken });
+            }
           }
           return response;
         })
