@@ -36,6 +36,12 @@ export class DoctorService {
         });
       }
     });
+
+    this.configService.subscribeForChange().subscribe(() => {
+      this.getDoctors().subscribe((doctors) => {
+        this.doctorsChangedSubject.next(doctors);
+      });
+    });
   }
 
   private doctorsChangedSubject = new Subject<Doctor[]>();
